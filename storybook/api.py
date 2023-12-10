@@ -4,7 +4,7 @@ from ninja import NinjaAPI
 from storybook.models import Storybook
 from storybook.models import Image
 from storybook.schema import StorybookSchema, StorybookResponseSchema, NotFoundSchema
-from storybook.schema import ImageSchema, ImageResponseSchema
+from storybook.schema import ImageSchema, ImageResponseSchema, ImageListResponseSchema
 from uuid import UUID  # Import UUID
 
 api = NinjaAPI()
@@ -59,15 +59,27 @@ def delete_storybook(request, storybook_id: str):
         return 404, {"message": "Storybook does not exist"}
 
 # Retrieve storybook images with a given storybook id
-@api.get("/images/{storybook_id}", response={200: ImageSchema, 404: NotFoundSchema})
-def get_all_storybook_images(request, storybook_id: int):
+@api.get("/images/{storybook_id}", response={200: ImageListResponseSchema, 404: NotFoundSchema})
+def get_storybook_images(request, storybook_id: UUID):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
-        return {"message": "Storybook does exist"}
-    except Image.DoesNotExist as e:
-        return 404, {"message": "Storybook does not exist"}
+        images = Image.objects.filter(storybook_id=storybook)
 
-# Create a new storybook image
+        # Create a list of ImageSchema objects for each image
+        image_schemas = [ImageSchema.from_orm(image) for image in images]
+
+        response_data = {
+        "storybook_id": str(storybook.id),  # Convert to string
+        "description_list": image_schemas,
+        }
+        return response_data
+    
+    except Storybook.DoesNotExist:
+        return 404, {"message": "Storybook does not exist"}
+    except Image.DoesNotExist:
+        return 404, {"message": "Storybook does not have any image"}
+
+
 @api.post("/images/create/{storybook_id}", response={201: ImageResponseSchema, 404: NotFoundSchema})
 def create_storybook_image(request, image: ImageSchema, storybook_id: UUID):
     try:
@@ -75,15 +87,17 @@ def create_storybook_image(request, image: ImageSchema, storybook_id: UUID):
     except Storybook.DoesNotExist:
         return 404, {'message': 'Not Found'}
     
-    # image_data = image.dict()
-    # # Create a new image associated with the storybook
-    # image = Image.objects.create(**image_data)
-    # return 201, image
-      # Set the 'storybook' field for the image
     image_data = image.dict()
-    image_data['storybook'] = storybook
+    image_data['storybook_id'] = storybook  # Use the correct UUID value here
 
     # Create a new image associated with the storybook
     new_image = Image.objects.create(**image_data)
     
-    return 201, new_image
+    # Return the response with the correct UUID for storybook_id
+    response_data = {
+        "id": str(new_image.id),
+        "storybook_id": str(storybook.id),  # Convert to string
+        "description": new_image.description,
+    }
+    
+    return 201, response_data
