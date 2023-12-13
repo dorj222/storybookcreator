@@ -71,6 +71,7 @@ This Django application provides REST API endpoints for a Human-AI co-creator ap
     ```
 
 The API will be accessible at [http://localhost:8000](http://localhost:8000).
+Django Ninja provides automated documentation at [http://127.0.0.1:8000/api/docs](http://127.0.0.1:8000/api/docs), where you can explore and test the API endpoints interactively.
 
 ## API Endpoints
 
@@ -86,10 +87,6 @@ The API will be accessible at [http://localhost:8000](http://localhost:8000).
   - `POST /images/{storybook_id}`: Upload a new image for a storybook.
   - `PUT /images/{image_id}`: Update an image by ID.
   - `DELETE /images/delete/{image_id}`: Delete an image by ID.
-
-## Contribution
-
-Feel free to contribute to this project by opening issues or submitting pull requests. Your feedback and contributions are highly appreciated.
 
 ## License
 
