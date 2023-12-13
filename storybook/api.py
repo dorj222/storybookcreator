@@ -1,11 +1,23 @@
 from datetime import datetime
+import os
+from uuid import UUID  # Import UUID
 from typing import List
-from ninja import NinjaAPI
+from ninja import NinjaAPI, File
+from ninja.files import UploadedFile
+from ninja.errors import HttpError
+
 from storybook.models import Storybook
 from storybook.models import Image
+
+# Django Schema related imports
 from storybook.schema import StorybookSchema, StorybookResponseSchema, NotFoundSchema
 from storybook.schema import ImageSchema, ImageResponseSchema, ImageListResponseSchema
-from uuid import UUID  # Import UUID
+
+# Django Image related imports
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from io import BytesIO
+from PIL import Image as PILImage
+
 
 api = NinjaAPI()
 # Retrieve all storybooks
@@ -65,12 +77,12 @@ def get_storybook_images(request, storybook_id: UUID):
         storybook = Storybook.objects.get(pk=storybook_id)
         images = Image.objects.filter(storybook_id=storybook)
 
-        # Create a list of ImageSchema objects for each image
-        image_schemas = [ImageSchema.from_orm(image) for image in images]
+        # Create a list of dictionaries with 'id' and 'image' keys
+        image_data_list = [{'id': str(image.id), 'image': image.image} for image in images]
 
         response_data = {
         "storybook_id": str(storybook.id),  # Convert to string
-        "description_list": image_schemas,
+        "image_list": image_data_list,
         }
         return response_data
     
@@ -79,25 +91,75 @@ def get_storybook_images(request, storybook_id: UUID):
     except Image.DoesNotExist:
         return 404, {"message": "Storybook does not have any image"}
 
-
-@api.post("/images/create/{storybook_id}", response={201: ImageResponseSchema, 404: NotFoundSchema})
-def create_storybook_image(request, image: ImageSchema, storybook_id: UUID):
+# Upload a image using the storybook id
+@api.post("/images/{storybook_id}", response={201: ImageResponseSchema, 404: NotFoundSchema})
+def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = File(...)):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
     except Storybook.DoesNotExist:
         return 404, {'message': 'Not Found'}
     
-    image_data = image.dict()
-    image_data['storybook_id'] = storybook  # Use the correct UUID value here
-
+    # Process the uploaded image if needed
+    pil_image = PILImage.open(image)    
+    # Save the processed image
+    buffer = BytesIO()
+    pil_image.save(buffer, format='JPEG')
+    
     # Create a new image associated with the storybook
-    new_image = Image.objects.create(**image_data)
+    new_image = Image(
+        storybook_id=storybook,
+        image=InMemoryUploadedFile(
+            buffer, None, image.name, 'image/jpeg', buffer.tell(), None
+        )
+    )
+    new_image.save()
     
     # Return the response with the correct UUID for storybook_id
     response_data = {
         "id": str(new_image.id),
         "storybook_id": str(storybook.id),  # Convert to string
-        "description": new_image.description,
     }
-    
     return 201, response_data
+
+# Delete an image with a given image id
+@api.delete("/images/delete/{image_id}", response={200: None, 404: NotFoundSchema})
+def delete_storybook_image(request, image_id: UUID):
+    try:
+        image = Image.objects.get(pk=image_id)
+        # Get the file path
+        file_path = image.image.path
+        # Delete the database entry
+        image.delete()
+        # Delete the associated file
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        return 200
+    except Image.DoesNotExist:
+        return 404, {"message": "Image does not exist"}
+    
+# Update an image with a given image id
+@api.put("/images/update/{image_id}", response={200: ImageResponseSchema, 404: NotFoundSchema})
+def update_storybook_image(request, image_id: UUID, image: UploadedFile = File(...)):
+    try:
+        existing_image = Image.objects.get(pk=image_id)
+        pil_image = PILImage.open(image)
+        # Save the processed image
+        buffer = BytesIO()
+        pil_image.save(buffer, format='JPEG')
+
+        # Update the image data in the database
+        existing_image.image = InMemoryUploadedFile(
+            buffer, None, image.name, 'image/jpeg', buffer.tell(), None
+        )
+        existing_image.save()
+
+        # Return the response with the correct UUID for image_id
+        response_data = {
+            "id": str(existing_image.id),
+            "storybook_id": str(existing_image.storybook_id),  # Convert to string
+        }
+        return 200, response_data
+
+    except Image.DoesNotExist:
+        return 404, {"message": "Image does not exist"}
+    

@@ -1,5 +1,5 @@
 from datetime import datetime
-from ninja import Schema
+from ninja import Schema, File
 from uuid import UUID  # Import UUID
 from typing import List
 
@@ -18,21 +18,23 @@ class StorybookResponseSchema(Schema):
     status: bool
 
 class ImageSchema(Schema):
-    # image: bytes
-    # storybook_id: UUID
-    description: str
+    image: File
+    class Config:
+        arbitrary_types_allowed = True
 
 class ImageResponseSchema(Schema):
-    # image: bytes
     id: UUID
     storybook_id: UUID
-    description: str
-    
-# Response schema for a list of images
+
+class ImageGetStorybookImages(Schema):
+    id: UUID
+    image: File
+    class Config:
+        arbitrary_types_allowed = True
+
 class ImageListResponseSchema(Schema):
-    # images: List[ImageSchema]
     storybook_id: UUID
-    description_list: List[ImageSchema]
+    image_list: List[ImageGetStorybookImages]
 
 class NotFoundSchema(Schema):
     message: str
