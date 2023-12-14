@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from storybook.api import api
+from storybook.api.api import api
 from django.conf import settings
 from django.conf.urls.static import static
 
