@@ -35,6 +35,24 @@ class ImageGetStorybookImages(Schema):
 class ImageListResponseSchema(Schema):
     storybook_id: UUID
     image_list: List[ImageGetStorybookImages]
+    
+class DescriptionSchema(Schema):
+    description: str
+    
+class DescriptionResponseSchema(Schema):
+    id: UUID
+    storybook_id: UUID
+    description: str
+    
+class DescriptionAllSchema(Schema):
+    id: UUID
+    description: str
+
+class DescriptionListResponseSchema(Schema):
+    storybook_id: UUID
+    description_list: List[DescriptionAllSchema]
 
 class NotFoundSchema(Schema):
     message: str
+    
+    

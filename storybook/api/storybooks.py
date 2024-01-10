@@ -20,10 +20,13 @@ def storybook(request, storybook_id: str):
 
 @router.post("", response={201: StorybookResponseSchema})
 def create_storybook(request, storybook: StorybookSchema):
-    storybook_data = storybook.dict()
-    storybook_data['createdAt'] = datetime.now()
-    new_storybook = Storybook.objects.create(**storybook_data)
-    return 201, new_storybook
+    try:
+        storybook_data = storybook.dict()
+        storybook_data['createdAt'] = datetime.now()
+        new_storybook = Storybook.objects.create(**storybook_data)
+        return 201, new_storybook
+    except Exception as e:
+        return 500, {"message": "Internal Server Error"}
 
 @router.put("/{storybook_id}", response={200:StorybookResponseSchema, 404: NotFoundSchema})
 def change_storybook(request, storybook_id: str, data: StorybookSchema):
