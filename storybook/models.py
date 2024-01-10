@@ -13,3 +13,8 @@ class Image(models.Model):
     storybook_id = models.ForeignKey(Storybook, on_delete=models.CASCADE, related_name='images')
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     image = models.ImageField(upload_to='storybook_images/')
+
+class Description(models.Model):
+    storybook_id = models.ForeignKey(Storybook, on_delete=models.CASCADE, related_name='description')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    description = models.CharField(max_length=250)
