@@ -52,6 +52,9 @@ class DescriptionListResponseSchema(Schema):
     storybook_id: UUID
     description_list: List[DescriptionAllSchema]
 
+class GenerateTextSchema(Schema):
+    user_input: str
+
 class NotFoundSchema(Schema):
     message: str
     
