@@ -47,6 +47,10 @@ This Django application provides REST API endpoints for a Human-AI co-creator ap
 4. Install dependencies:
 
     ```bash
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    ```
+
+    ```bash
     pip install -r requirements.txt
     ```
 5. Create an environment file (`.env`) in the project root and configure your environment variables:
@@ -58,13 +62,19 @@ This Django application provides REST API endpoints for a Human-AI co-creator ap
     # Add other environment variables as needed
     ```
 
-6. Run migrations to apply database changes:
+6. Download AI models
+    ```bash
+    wget https://civitai.com/api/download/models/254091
+    ```
+    or download via: https://civitai.com/models/125907/realcartoon-xl
+
+7. Run migrations to apply database changes:
 
     ```bash
     python manage.py migrate
     ```
 
-7. Start the development server:
+8. Start the development server:
 
     ```bash
     python manage.py runserver
