@@ -13,6 +13,9 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
 from PIL import Image as PILImage
 
+# Import diffusion model
+from image2image import diffusion_model
+
 router = Router()
 
 @router.get("/{storybook_id}", response={200: ImageListResponseSchema, 404: NotFoundSchema})
@@ -48,9 +51,13 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
         )
     )
     new_image.save()
+
+    # todo: run img2text to get input prompt
+    generated_image = diffusion_model.run(pil_image, prompt="children's book illustration")
     response_data = {
         "id": str(new_image.id),
         "storybook_id": str(storybook.id),
+        "image": generated_image
     }
     return 201, response_data
 
