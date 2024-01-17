@@ -25,6 +25,7 @@ class ImageSchema(Schema):
 class ImageResponseSchema(Schema):
     id: UUID
     storybook_id: UUID
+    description: str
 
 class ImageGetStorybookImages(Schema):
     id: UUID
