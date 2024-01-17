@@ -66,7 +66,6 @@ This Django application provides REST API endpoints for a Human-AI co-creator ap
     ```bash
     wget https://civitai.com/api/download/models/254091
     ```
-    or download via: https://civitai.com/models/125907/realcartoon-xl
 
 7. Run migrations to apply database changes:
 
