@@ -8,12 +8,14 @@ class Storybook(models.Model):
     duration = models.FloatField()
     iterations = models.IntegerField()
     status = models.BooleanField()
-    
+
 class Image(models.Model):
     storybook_id = models.ForeignKey(Storybook, on_delete=models.CASCADE, related_name='images')
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    image = models.ImageField(upload_to='storybook_images/')
-
+    def get_upload_to(self, filename):
+        return 'storybook_images/%s/%s' % (self.storybook_id_id, filename)
+    image = models.ImageField(upload_to=get_upload_to)
+        
 class Description(models.Model):
     storybook_id = models.ForeignKey(Storybook, on_delete=models.CASCADE, related_name='description')
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

@@ -25,6 +25,7 @@ class ImageSchema(Schema):
 class ImageResponseSchema(Schema):
     id: UUID
     storybook_id: UUID
+    description: str
 
 class ImageGetStorybookImages(Schema):
     id: UUID
@@ -51,6 +52,9 @@ class DescriptionAllSchema(Schema):
 class DescriptionListResponseSchema(Schema):
     storybook_id: UUID
     description_list: List[DescriptionAllSchema]
+
+class GenerateTextSchema(Schema):
+    user_input: str
 
 class NotFoundSchema(Schema):
     message: str
