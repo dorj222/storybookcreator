@@ -14,7 +14,7 @@ from io import BytesIO
 from PIL import Image as PILImage
 
 # Import diffusion model
-from image2image import diffusion_model
+from storybook.llm_models import diffusion_model
 
 router = Router()
 
