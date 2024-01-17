@@ -8,7 +8,10 @@ from storybook.models import Storybook
 from storybook.models import Image
 from storybook.schema import ImageResponseSchema, ImageListResponseSchema, NotFoundSchema
 
-# # Django Image related imports
+# LLM Model BLIP for description text generation
+from storybook.llm_models.blip import generate_image_description
+
+# Django Image related imports
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
 from PIL import Image as PILImage
@@ -41,23 +44,32 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
         storybook = Storybook.objects.get(pk=storybook_id)
     except Storybook.DoesNotExist:
         return 404, {'message': 'Not Found'}
-    pil_image = PILImage.open(image)    
+
+    pil_image = PILImage.open(image)
     buffer = BytesIO()
     pil_image.save(buffer, format='JPEG')
+
     new_image = Image(
         storybook_id=storybook,
         image=InMemoryUploadedFile(
-            buffer, None, image.name, 'image/jpeg', buffer.tell(), None
+            buffer, 
+            None, 
+            image.name, 
+            'image/jpeg',
+            buffer.tell(), 
+            None
         )
     )
-    new_image.save()
-
-    # todo: run img2text to get input prompt
+    new_image.save()  
+    pil_image = PILImage.open(buffer)
+    # re-generate an image with SD     
     generated_image = diffusion_model.run(pil_image, prompt="children's book illustration")
+    # image to text caption generation
+    image_description = generate_image_description(generated_image)  
     response_data = {
         "id": str(new_image.id),
         "storybook_id": str(storybook.id),
-        "image": generated_image
+        "description": image_description  # Add the image_description to Response
     }
     return 201, response_data
 
