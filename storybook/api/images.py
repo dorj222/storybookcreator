@@ -16,6 +16,9 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from io import BytesIO
 from PIL import Image as PILImage
 
+# Import diffusion model
+from storybook.llm_models import diffusion_model
+
 router = Router()
 
 @router.get("/{storybook_id}", response={200: ImageListResponseSchema, 404: NotFoundSchema})
@@ -59,8 +62,10 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
     )
     new_image.save()  
     pil_image = PILImage.open(buffer)
+    # re-generate an image with SD     
+    generated_image = diffusion_model.run(pil_image, prompt="children's book illustration")
     # image to text caption generation
-    image_description = generate_image_description(pil_image)  
+    image_description = generate_image_description(generated_image)  
     response_data = {
         "id": str(new_image.id),
         "storybook_id": str(storybook.id),
