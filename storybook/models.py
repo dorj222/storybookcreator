@@ -14,7 +14,9 @@ class Image(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     def get_upload_to(self, filename):
         return 'storybook_images/%s/%s' % (self.storybook_id_id, filename)
-    image = models.ImageField(upload_to=get_upload_to)
+    image = models.ImageField(upload_to=get_upload_to, null=True) 
+    description = models.TextField()
+
         
 class Description(models.Model):
     storybook_id = models.ForeignKey(Storybook, on_delete=models.CASCADE, related_name='description')

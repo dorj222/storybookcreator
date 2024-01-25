@@ -27,7 +27,6 @@ def generate_description_story(user_input: str) -> str:
 
     # Extract the generated text
     generated_text = outputs[0]["generated_text"]
-    print("generated_text: ", generated_text)
     assistant_index = generated_text.find("<|assistant|>")
     if assistant_index != -1:
         assistant_response = generated_text[assistant_index + len("<|assistant|>"):]

@@ -16,9 +16,9 @@ def run(image, prompt):
                                                              strength=config["strength"],
                                                              guidance_scale=config["guidance_scale"],
                                                              num_inference_steps=config["num_inference_steps"]).to("cuda")
-    # pipe.load_lora_weights(config["lora_path"])
+    pipe.load_lora_weights(config["lora_path"])
     image = pipe(prompt, image=image, strength=config["strength"]).images[0]
-    image.show()
+    # image.show()
     # Immediately delete the pipe object
     del pipe
     # Perform garbage collection

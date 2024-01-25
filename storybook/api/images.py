@@ -13,6 +13,7 @@ from storybook.llm_models.blip import generate_image_description
 
 # Django Image related imports
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.base import ContentFile
 from io import BytesIO
 from PIL import Image as PILImage
 
@@ -26,7 +27,10 @@ def get_storybook_images(request, storybook_id: UUID):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
         images = Image.objects.filter(storybook_id=storybook)
-        image_data_list = [{'id': str(image.id), 'image': image.image} for image in images]
+        image_data_list = [
+            {'id': str(image.id), 
+             'image': image.image.url if image.image else None, 
+             'description': image.description} for image in images]
         response_data = {
             "storybook_id": str(storybook.id),
             "image_list": image_data_list,
@@ -46,31 +50,29 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
         return 404, {'message': 'Not Found'}
 
     pil_image = PILImage.open(image)
-    buffer = BytesIO()
-    pil_image.save(buffer, format='JPEG')
+    generated_image = diffusion_model.run(pil_image, prompt="children's book illustration")
+
+    # image to text caption generation
+    image_description = generate_image_description(generated_image) 
+
+    buf = BytesIO()
+    generated_image.save(buf, format='JPEG')
+    content_file = ContentFile(buf.getvalue())
 
     new_image = Image(
         storybook_id=storybook,
-        image=InMemoryUploadedFile(
-            buffer, 
-            None, 
-            image.name, 
-            'image/jpeg',
-            buffer.tell(), 
-            None
-        )
+        description=image_description,
     )
-    new_image.save()  
-    pil_image = PILImage.open(buffer)
-    # re-generate an image with SD     
-    generated_image = diffusion_model.run(pil_image, prompt="children's book illustration")
-    # image to text caption generation
-    image_description = generate_image_description(generated_image)  
+    new_image.image.save(f'{new_image.id}.jpg', content_file)
+    new_image.save()
+
     response_data = {
         "id": str(new_image.id),
         "storybook_id": str(storybook.id),
-        "description": image_description  # Add the image_description to Response
+        "description": new_image.description,
+        "image": new_image.image.url if new_image.image else None 
     }
+    
     return 201, response_data
 
 @router.delete("/delete/{image_id}", response={200: None, 404: NotFoundSchema})
@@ -86,12 +88,33 @@ def delete_storybook_image(request, image_id: UUID):
         return 404, {"message": "Image does not exist"}
 
 @router.put("/update/{image_id}", response={200: ImageResponseSchema, 404: NotFoundSchema})
-def update_storybook_image(request, image_id: UUID, image: UploadedFile = File(...)):
+def update_storybook_image(request, image_id: UUID, image: UploadedFile = File(None)):
     try:
         existing_image = Image.objects.get(pk=image_id)
     except Image.DoesNotExist:
         return 404, {'message': 'Image Not Found'}
-    pil_image = PILImage.open(image)    
-    buffer = BytesIO()
-    pil_image.save(buffer, format='JPEG')
-    existing_image
+    
+    if image:
+        pil_image = PILImage.open(image)    
+        buffer = BytesIO()
+        pil_image.save(buffer, format='JPEG')
+        existing_image.image = InMemoryUploadedFile(
+            buffer, 
+            None, 
+            image.name, 
+            'image/jpeg',
+            buffer.tell(), 
+            None
+        )
+        image_description = generate_image_description(pil_image) 
+        existing_image.description = image_description
+
+    existing_image.save()
+    
+    response_data = {
+        "id": str(existing_image.id),
+        "storybook_id": str(existing_image.storybook_id.id),
+        "description": existing_image.description,
+        "image": existing_image.image.url if existing_image.image else None
+    }
+    return 200, response_data

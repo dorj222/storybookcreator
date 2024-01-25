@@ -18,18 +18,22 @@ class StorybookResponseSchema(Schema):
     status: bool
 
 class ImageSchema(Schema):
-    image: File
+    image: str
     class Config:
         arbitrary_types_allowed = True
-
+        
 class ImageResponseSchema(Schema):
     id: UUID
     storybook_id: UUID
-    description: str
+    image: str  
+    description: str 
+    class Config:
+        arbitrary_types_allowed = True
 
 class ImageGetStorybookImages(Schema):
     id: UUID
     image: File
+    description: str 
     class Config:
         arbitrary_types_allowed = True
 
