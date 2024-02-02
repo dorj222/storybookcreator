@@ -50,7 +50,11 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
         return 404, {'message': 'Not Found'}
 
     pil_image = PILImage.open(image)
-    generated_image = diffusion_model.run(pil_image, prompt="children's book illustration")
+    pil_image = pil_image.convert("RGB").resize((512, 512))
+
+    pil_image_description = generate_image_description(pil_image) 
+    prompt="children's book illustration " + pil_image_description
+    generated_image = diffusion_model.run(pil_image, prompt=prompt)
 
     # image to text caption generation
     image_description = generate_image_description(generated_image) 
