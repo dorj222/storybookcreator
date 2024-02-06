@@ -14,7 +14,7 @@ def generate_description_story(user_input: str) -> str:
     messages = [
         {
             "role": "system",
-            "content": "You are my children's storybook narrator. Make the story very adventurious",
+            "content": "Please consider the next sentence and make a children's storybook story in the voice of a children's storybook narrator. Please start the story with Narration:",
         },
         {"role": "user", "content": user_input},
     ]
@@ -27,6 +27,11 @@ def generate_description_story(user_input: str) -> str:
 
     # Extract the generated text
     generated_text = outputs[0]["generated_text"]
+    # Remove "Narration:" and "\n\n" from the generated text
+    generated_text = generated_text.replace("Narration:", "").replace("\n\n", "").replace("\n", "").replace("\\", "")
+    # Select the first 7 sentences
+    generated_text = generated_text.split('.')
+    generated_text = ".".join(generated_text[:7])
     assistant_index = generated_text.find("<|assistant|>")
     if assistant_index != -1:
         assistant_response = generated_text[assistant_index + len("<|assistant|>"):]
@@ -38,7 +43,7 @@ def generate_title(user_input: str) -> str:
     messages = [
         {
             "role": "system",
-            "content": "You are my storybook title generator. Please only respond the storybook title with Title: keyword",
+            "content": "Please consider the next following text and generate a children's storybook title with Title: keyword",
         },
         {"role": "user", "content": user_input},
     ]
