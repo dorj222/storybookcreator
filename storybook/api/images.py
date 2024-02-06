@@ -53,14 +53,12 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
     pil_image = PILImage.open(image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
 
-    print("prompt: ", prompt)
-
     if prompt is None:
         prompt = "children's book illustration"
 
     generated_image = diffusion_model.run(pil_image, prompt=prompt)
     # image to text caption generation
-    image_description = generate_image_description(generated_image) 
+    image_description = generate_image_description(generated_image, prompt=prompt) 
 
     buf = BytesIO()
     generated_image.save(buf, format='JPEG')
