@@ -1,7 +1,7 @@
 from datetime import datetime
 from ninja import Schema, File
 from uuid import UUID  # Import UUID
-from typing import List
+from typing import List, Optional
 
 class StorybookSchema(Schema):
     title: str
@@ -19,6 +19,7 @@ class StorybookResponseSchema(Schema):
 
 class ImageSchema(Schema):
     image: str
+    prompt: Optional[str]
     class Config:
         arbitrary_types_allowed = True
         

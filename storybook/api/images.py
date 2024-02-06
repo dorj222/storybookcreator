@@ -16,6 +16,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.base import ContentFile
 from io import BytesIO
 from PIL import Image as PILImage
+from typing import Optional
 
 # Import diffusion model
 from storybook.llm_models import diffusion_model
@@ -43,7 +44,7 @@ def get_storybook_images(request, storybook_id: UUID):
         return 404, {"message": "Storybook does not have any image"}
 
 @router.post("/{storybook_id}", response={201: ImageResponseSchema, 404: NotFoundSchema})
-def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = File(...)):
+def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = File(...), prompt: Optional[str] = None):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
     except Storybook.DoesNotExist:
@@ -52,10 +53,12 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
     pil_image = PILImage.open(image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
 
-    pil_image_description = generate_image_description(pil_image) 
-    prompt="children's book illustration " + pil_image_description
-    generated_image = diffusion_model.run(pil_image, prompt=prompt)
+    print("prompt: ", prompt)
 
+    if prompt is None:
+        prompt = "children's book illustration"
+
+    generated_image = diffusion_model.run(pil_image, prompt=prompt)
     # image to text caption generation
     image_description = generate_image_description(generated_image) 
 
