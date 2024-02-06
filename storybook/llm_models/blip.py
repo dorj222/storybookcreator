@@ -5,9 +5,9 @@ processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-larg
 model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
 
 def generate_image_description(pil_image):
-    text = "this is a cartoon of"
+    text = "this is a children drawing of"
     inputs = processor(pil_image, text, return_tensors="pt")
     out = model.generate(**inputs)
     image_caption = processor.decode(out[0], skip_special_tokens=True)
-    children_story = generate_description_story(image_caption)
-    return children_story
+    #children_story = generate_description_story(image_caption)
+    return image_caption

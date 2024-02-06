@@ -49,12 +49,17 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
     except Storybook.DoesNotExist:
         return 404, {'message': 'Not Found'}
 
+    # Prompt generation - insert Blip Model here
+    
     pil_image = PILImage.open(image)
-    generated_image = diffusion_model.run(pil_image, prompt="children's book illustration")
+    prompt = generate_image_description(pil_image)  
+    prompt = prompt + ", children's book illustration"
+    print("Prompt: ", prompt)
+    generated_image = diffusion_model.run(pil_image, prompt=prompt)
 
     # image to text caption generation
     image_description = generate_image_description(generated_image) 
-
+    
     buf = BytesIO()
     generated_image.save(buf, format='JPEG')
     content_file = ContentFile(buf.getvalue())
