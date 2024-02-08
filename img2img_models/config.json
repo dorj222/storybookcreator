@@ -1,9 +1,0 @@
-{
-    "realcartoon_path": "img2img_models/realcartoonXL_v6.safetensors",
-    "lora_path": "img2img_models/picbookXLloraV1.safetensors",
-    "sd_turbo_path": "sd_xl_turbo_1.0.safetensors",
-    "strength": 0.65,
-    "guidance_scale": 0.0,
-    "num_inference_steps": 2
-  }
-  

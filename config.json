@@ -1,0 +1,12 @@
+{
+     "realcartoon_path": "img2img_models/realcartoonXL_v6.safetensors",
+    "lora_path": "img2img_models/picbookXLloraV1.safetensors",
+    "sd_turbo_path": "img2img_models/sd_xl_turbo_1.0.safetensors",
+    "sd_turbo_path_fp16": "img2img_models/sd_xl_turbo_1.0_fp16.safetensors",
+    "sd_1_4_path": "img2img_models/sd-v1-4.safetensors",
+    "strength": 0.55,
+    "guidance_scale": 0,
+    "num_inference_steps": 1,
+    "img_enhancement_prompt": ", children's book illustration, fine details, 2D vector, art for textile sublimation, Hidetaka Miyazaki, Studio Ghibli, Japanese cartoon style"
+  }
+  

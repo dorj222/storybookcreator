@@ -12,3 +12,11 @@ def generate_image_description(pil_image, prompt):
     image_caption = prompt + " " + image_caption
     children_story = generate_description_story(image_caption)
     return children_story
+
+def generate_image_caption(pil_image):
+    text = "this is a children drawing of"
+    inputs = processor(pil_image, text, return_tensors="pt")
+    out = model.generate(**inputs)
+    image_caption = processor.decode(out[0], skip_special_tokens=True)
+    image_caption = image_caption.split("this is a children drawing of")[1]
+    return image_caption

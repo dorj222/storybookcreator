@@ -14,7 +14,7 @@ def generate_description_story(user_input: str) -> str:
     messages = [
         {
             "role": "system",
-            "content": "Please consider the next sentence and make a children's storybook story in the voice of a children's storybook narrator. Please start the story with Narration:",
+            "content": "Please consider the next sentences and continue a children's storybook story in the voice of a children's storybook narrator. Please start the story with Narration:",
         },
         {"role": "user", "content": user_input},
     ]
@@ -23,15 +23,15 @@ def generate_description_story(user_input: str) -> str:
     prompt = pipe.tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=False
     )
-    outputs = pipe(prompt, max_new_tokens=256, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
+    outputs = pipe(prompt, max_new_tokens=128, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
 
     # Extract the generated text
     generated_text = outputs[0]["generated_text"]
     # Remove "Narration:" and "\n\n" from the generated text
     generated_text = generated_text.replace("Narration:", "").replace("\n\n", "").replace("\n", "").replace("\\", "")
-    # Select the first 7 sentences
+    # Select the first 3 sentences
     generated_text = generated_text.split('.')
-    generated_text = ".".join(generated_text[:7])
+    generated_text = ".".join(generated_text[:3])
     assistant_index = generated_text.find("<|assistant|>")
     if assistant_index != -1:
         assistant_response = generated_text[assistant_index + len("<|assistant|>"):]

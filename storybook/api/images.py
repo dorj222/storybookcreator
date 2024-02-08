@@ -10,6 +10,7 @@ from storybook.schema import ImageResponseSchema, ImageListResponseSchema, NotFo
 
 # LLM Model BLIP for description text generation
 from storybook.llm_models.blip import generate_image_description
+from storybook.llm_models.blip import generate_image_caption
 
 # Django Image related imports
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -20,6 +21,13 @@ from typing import Optional
 
 # Import diffusion model
 from storybook.llm_models import diffusion_model
+import json
+
+# Import config file
+config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
+# Load configuration from config.json
+with open(config_path, "r") as config_file:
+    config = json.load(config_file)
 
 router = Router()
 
@@ -50,13 +58,17 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
     except Storybook.DoesNotExist:
         return 404, {'message': 'Not Found'}
 
+    if prompt is None:
+        prompt = ""
+
     pil_image = PILImage.open(image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
 
-    if prompt is None:
-        prompt = "children's book illustration"
+    raw_img_caption = generate_image_caption(pil_image)
+    img2img_prompt = f"{prompt}, {raw_img_caption}{config['img_enhancement_prompt']}"
 
-    generated_image = diffusion_model.run(pil_image, prompt=prompt)
+    # image to image enhancement
+    generated_image = diffusion_model.run(pil_image, prompt=img2img_prompt)
     # image to text caption generation
     image_description = generate_image_description(generated_image, prompt=prompt) 
 
