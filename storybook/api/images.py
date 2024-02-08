@@ -9,7 +9,8 @@ from storybook.models import Image
 from storybook.schema import ImageResponseSchema, ImageListResponseSchema, NotFoundSchema
 
 # LLM Model BLIP for description text generation
-from storybook.llm_models.blip import generate_image_description
+from storybook.llm_models.blip import generate_image_caption
+from storybook.llm_models.tiny_llama import generate_description_story
 
 # Django Image related imports
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -43,24 +44,24 @@ def get_storybook_images(request, storybook_id: UUID):
     except Image.DoesNotExist:
         return 404, {"message": "Storybook does not have any image"}
 
+# Endpoint to create a new image and text for a storybook
 @router.post("/{storybook_id}", response={201: ImageResponseSchema, 404: NotFoundSchema})
 def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = File(...), prompt: Optional[str] = None):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
     except Storybook.DoesNotExist:
         return 404, {'message': 'Not Found'}
-
-    # Prompt generation - insert Blip Model here
     
-    pil_image = PILImage.open(image)
-    prompt = generate_image_description(pil_image)  
-    prompt = prompt + ", children's book illustration"
+    # Image2Image generation 
     print("Prompt: ", prompt)
-    generated_image = diffusion_model.run(pil_image, prompt=prompt)
+    pil_image = PILImage.open(image)
+    image_caption = generate_image_caption(pil_image)  
+    image2image_prompt = prompt + ", " + image_caption + ", children's book illustration"
+    print("Image2Image Prompt: ", image2image_prompt)
+    generated_image = diffusion_model.run(pil_image, prompt=image2image_prompt)
 
-    generated_image = diffusion_model.run(pil_image, prompt=prompt)
-    # image to text caption generation
-    image_description = generate_image_description(generated_image) 
+    # Story cintuation generation froms starting sentence
+    image_description = generate_description_story(prompt) 
     
     buf = BytesIO()
     generated_image.save(buf, format='JPEG')
