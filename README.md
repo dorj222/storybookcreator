@@ -47,7 +47,7 @@ This Django application provides REST API endpoints for a Human-AI co-creator ap
 4. Install dependencies:
 
     ```bash
-    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
     ```
 
     ```bash
