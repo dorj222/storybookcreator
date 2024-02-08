@@ -23,7 +23,7 @@ def generate_description_story(user_input: str) -> str:
     prompt = pipe.tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=False
     )
-    outputs = pipe(prompt, max_new_tokens=256, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
+    outputs = pipe(prompt, max_new_tokens=64, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
 
     # Extract the generated text
     generated_text = outputs[0]["generated_text"]
@@ -31,7 +31,7 @@ def generate_description_story(user_input: str) -> str:
     generated_text = generated_text.replace("Narration:", "").replace("\n\n", "").replace("\n", "").replace("\\", "")
     # Select the first 7 sentences
     generated_text = generated_text.split('.')
-    generated_text = ".".join(generated_text[:7])
+    generated_text = ".".join(generated_text[:3])
     assistant_index = generated_text.find("<|assistant|>")
     if assistant_index != -1:
         assistant_response = generated_text[assistant_index + len("<|assistant|>"):]
