@@ -52,7 +52,7 @@ def get_storybook_images(request, storybook_id: UUID):
         return 404, {"message": "Storybook does not have any image"}
 
 @router.post("/{storybook_id}", response={201: ImageResponseSchema, 404: NotFoundSchema})
-def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = File(...), prompt: Optional[str] = None):
+def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = File(...), prompt: Optional[str] = None,  parameters: Optional[str] = None):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
     except Storybook.DoesNotExist:
@@ -61,16 +61,21 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
     if prompt is None:
         prompt = ""
 
+    if parameters is None:
+        parameters = {"sd_iteration": 80, "story_chapter": "chapter_2_prompt"}
+    else:
+        parameters = json.loads(parameters)
+
     pil_image = PILImage.open(image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
 
     raw_img_caption = generate_image_caption(pil_image)
-    img2img_prompt = f"{prompt}, {raw_img_caption}{config['img_enhancement_prompt']}"
+    img2img_prompt = f"{prompt}, {raw_img_caption}, {config['img_enhancement_prompt']}"
 
     # image to image enhancement
-    generated_image = diffusion_model.run(pil_image, prompt=img2img_prompt)
+    generated_image = diffusion_model.run(pil_image, prompt=img2img_prompt, parameter = parameters["sd_iteration"])
     # image to text caption generation
-    image_description = generate_image_description(generated_image, prompt=prompt) 
+    image_description = generate_image_description(generated_image, prompt=prompt, parameter = parameters["story_chapter"]) 
 
     buf = BytesIO()
     generated_image.save(buf, format='JPEG')
