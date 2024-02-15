@@ -3,6 +3,14 @@ from django.http import JsonResponse
 from transformers import pipeline
 import torch
 from storybook.schema import GenerateTextSchema
+import json
+import os
+
+# Import config file
+config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
+# Load configuration from config.json
+with open(config_path, "r") as config_file:
+    config = json.load(config_file)
 
 # Load TinyLlama model
 pipe = pipeline("text-generation", 
@@ -10,11 +18,11 @@ pipe = pipeline("text-generation",
                 torch_dtype=torch.bfloat16, 
                 device_map="auto")
 
-def generate_description_story(user_input: str) -> str:
+def generate_description_story(user_input: str, parameter) -> str:
     messages = [
         {
             "role": "system",
-            "content": "Please consider the next sentences and continue a children's storybook story in the voice of a children's storybook narrator. Please start the story with Narration:",
+            "content": config[parameter],
         },
         {"role": "user", "content": user_input},
     ]
@@ -43,7 +51,7 @@ def generate_title(user_input: str) -> str:
     messages = [
         {
             "role": "system",
-            "content": "Please consider the next following text and generate a children's storybook title with Title: keyword",
+            "content": config["title_prompt"],
         },
         {"role": "user", "content": user_input},
     ]

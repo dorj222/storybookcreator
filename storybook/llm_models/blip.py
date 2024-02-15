@@ -4,13 +4,13 @@ from storybook.llm_models.tiny_llama import generate_description_story
 processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
 model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
 
-def generate_image_description(pil_image, prompt):
+def generate_image_description(pil_image, prompt, parameter):
     text = "This is a story of"
     inputs = processor(pil_image, text, return_tensors="pt")
     out = model.generate(**inputs)
     image_caption = processor.decode(out[0], skip_special_tokens=True)
     image_caption = prompt + " " + image_caption
-    children_story = generate_description_story(image_caption)
+    children_story = generate_description_story(image_caption, parameter)
     return children_story
 
 def generate_image_caption(pil_image):

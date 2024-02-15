@@ -20,6 +20,7 @@ class StorybookResponseSchema(Schema):
 class ImageSchema(Schema):
     image: str
     prompt: Optional[str]
+    parameters: Optional[str]
     class Config:
         arbitrary_types_allowed = True
         

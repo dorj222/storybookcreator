@@ -4,9 +4,14 @@
     "sd_turbo_path": "img2img_models/sd_xl_turbo_1.0.safetensors",
     "sd_turbo_path_fp16": "img2img_models/sd_xl_turbo_1.0_fp16.safetensors",
     "sd_1_4_path": "img2img_models/sd-v1-4.safetensors",
-    "strength": 0.55,
+    "strength": 0.1,
     "guidance_scale": 0,
-    "num_inference_steps": 1,
-    "img_enhancement_prompt": ", children's book illustration, fine details, 2D vector, art for textile sublimation, Hidetaka Miyazaki, Studio Ghibli, Japanese cartoon style"
+    "num_inference_steps": 10,
+    "img_enhancement_prompt": " children's book illustration, 2D vector, art for textile sublimation, Japanese cartoon",
+    "chapter_1_prompt" : "Please consider the next sentences and starts a children's storybook story in the voice of a children's storybook narrator. Please begin the story with Narration:",
+    "chapter_2_prompt" : "Please consider the next sentences and continues a children's storybook story in the voice of a children's storybook narrator. Please begin the story with Narration:",
+    "chapter_3_prompt" : "Please consider the next sentences and continues a children's storybook story in the voice of a children's storybook narrator. Please begin the story with Narration:",
+    "chapter_4_prompt" : "Please consider the next sentences and ends a children's storybook story in the voice of a children's storybook narrator. Please begin the story with Narration:",
+    "title_prompt" : "Please consider the next following text and generate a children's storybook title with Title: keyword" 
   }
   
