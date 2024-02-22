@@ -62,6 +62,9 @@ class DescriptionListResponseSchema(Schema):
 class GenerateTextSchema(Schema):
     user_input: str
 
+class TranslateTextSchema(Schema):
+    user_input: str
+
 class NotFoundSchema(Schema):
     message: str
     
