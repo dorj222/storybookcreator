@@ -5,17 +5,21 @@ from typing import List, Optional
 
 class StorybookSchema(Schema):
     title: str
-    duration: float
-    iterations: int
-    status: bool
+    starting_sentence: str
+    finished_playthrough: bool
+    drawing: dict
+    signed_the_book: bool
+    decision_of_authorship: str
 
 class StorybookResponseSchema(Schema):
     id: UUID
     title: str
     createdAt: datetime
-    duration: float
-    iterations: int
-    status: bool
+    starting_sentence: str
+    finished_playthrough: bool
+    drawing: dict
+    signed_the_book: bool
+    decision_of_authorship: str
 
 class ImageSchema(Schema):
     image: str

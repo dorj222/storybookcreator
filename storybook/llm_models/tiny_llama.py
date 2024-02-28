@@ -5,6 +5,7 @@ import torch
 from storybook.schema import GenerateTextSchema
 import json
 import os
+import gc
 
 # Import config file
 config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
@@ -41,6 +42,8 @@ def generate_description_story(user_input: str, parameter) -> str:
     generated_text = generated_text.split('.')
     generated_text = ".".join(generated_text[:3])
     assistant_index = generated_text.find("<|assistant|>")
+    gc.collect()
+    torch.cuda.empty_cache()
     if assistant_index != -1:
         assistant_response = generated_text[assistant_index + len("<|assistant|>"):]
         return assistant_response.strip()
@@ -64,6 +67,8 @@ def generate_title(user_input: str) -> str:
     generated_text = outputs[0]["generated_text"]
     # Find the assistant's response start index
     assistant_index = generated_text.find("<|assistant|>")
+    gc.collect()
+    torch.cuda.empty_cache()
     if assistant_index != -1:
         # Get the assistant's response
         assistant_response = generated_text[assistant_index + len("<|assistant|>"):]
