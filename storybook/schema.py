@@ -32,7 +32,6 @@ class ImageResponseSchema(Schema):
     id: UUID
     storybook_id: UUID
     image: str  
-    description: str 
     class Config:
         arbitrary_types_allowed = True
 
@@ -65,6 +64,11 @@ class DescriptionListResponseSchema(Schema):
 
 class GenerateTextSchema(Schema):
     user_input: str
+
+class GenerateStorySchema(Schema):
+    prompt: str
+    caption: str
+    chapter: int
 
 class TranslateTextSchema(Schema):
     user_input: str

@@ -9,19 +9,18 @@ config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
 with open(config_path, "r") as config_file:
     config = json.load(config_file)
 
-def run(image, prompt, parameter):
-    torch.cuda.empty_cache()
-    pipe = StableDiffusionXLImg2ImgPipeline.from_single_file(config["sd_turbo_path"],
-                                                             strength=config["strength"]  * parameter,
-                                                             guidance_scale=config["guidance_scale"],
-                                                             num_inference_steps=config["num_inference_steps"] * parameter
+pipe = StableDiffusionXLImg2ImgPipeline.from_single_file(config["sd_turbo_path_fp16"],
+                                                            torch_dtype=torch.float16, 
+                                                            use_safetensors=True,                                                           
+                                                             guidance_scale=0.0,
+                                                             num_inference_steps=10
                                                              ).to("cuda")
-    # pipe.load_lora_weights(config["lora_path"])
-    image = pipe(prompt, image=image, strength=config["strength"]).images[0]
-    # image.show()
-    # Immediately delete the pipe object
-    del pipe
+
+def run(image, prompt, strength):
+    torch.cuda.empty_cache()
+    gen_image = pipe(prompt, image=image, strength=strength, guidance_scale=0.0,
+                                                             num_inference_steps=10).images[0]
     # Perform garbage collection
     gc.collect()
     torch.cuda.empty_cache()
-    return image
+    return gen_image
