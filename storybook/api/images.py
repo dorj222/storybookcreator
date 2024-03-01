@@ -80,8 +80,7 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
     content_file = ContentFile(buf.getvalue())
 
     new_image = Image(
-        storybook_id=storybook,
-        description="",
+        storybook_id=storybook
     )
     new_image.image.save(f'{new_image.id}.jpg', content_file)
     new_image.save()

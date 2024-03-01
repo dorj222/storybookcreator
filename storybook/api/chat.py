@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from ninja import Router, File
 from ninja.files import UploadedFile
 from PIL import Image as PILImage
+from typing import Optional
 
 
 from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateStorySchema
@@ -24,18 +25,16 @@ def generate_translations(request, data: TranslateTextSchema):
     title_text = translate_text(data.user_input)
     return JsonResponse({'generated_text': title_text})
 
-@router.post("/story")
-def create_story(request, data:GenerateStorySchema):
+@router.post("/descriptions")
+def generate_descriptions(request, image: UploadedFile = File(...), prompt: Optional[str] = None,  chapter_index: Optional[str] = None):
     # image to text caption generation
-    generated_stpry = generate_image_description(Caption=data["caption"], prompt=data["prompt"], chapter = data["chapter"]) 
+    generated_description = generate_image_description(pil_image=image,prompt=prompt, chapter_index=chapter_index) 
     response_data = {
-        "story": generated_stpry
+        "generated_description": generated_description
     } 
-    return 201, response_data
+    return JsonResponse(response_data)
 
-@router.post("/caption")
+@router.post("/captions")
 def create_image_caption(request, image: UploadedFile = File(...)):
-    pil_image = PILImage.open(image)
-    pil_image = pil_image.convert("RGB").resize((512, 512))
-    caption = generate_image_caption(pil_image)
+    caption = generate_image_caption(image)
     return JsonResponse({'caption': caption})
