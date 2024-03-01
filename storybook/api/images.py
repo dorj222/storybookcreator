@@ -8,10 +8,6 @@ from storybook.models import Storybook
 from storybook.models import Image
 from storybook.schema import ImageResponseSchema, ImageListResponseSchema, NotFoundSchema
 
-# LLM Model BLIP for description text generation
-from storybook.llm_models.blip import generate_image_description
-from storybook.llm_models.blip import generate_image_caption
-
 # Django Image related imports
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.base import ContentFile
@@ -22,6 +18,10 @@ from typing import Optional
 # Import diffusion model
 from storybook.llm_models import diffusion_model
 import json
+
+import time
+from django.http import JsonResponse
+
 
 # Import config file
 config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
@@ -51,8 +51,10 @@ def get_storybook_images(request, storybook_id: UUID):
     except Image.DoesNotExist:
         return 404, {"message": "Storybook does not have any image"}
 
+
 @router.post("/{storybook_id}", response={201: ImageResponseSchema, 404: NotFoundSchema})
-def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = File(...), prompt: Optional[str] = None,  parameters: Optional[str] = None):
+def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = File(...), 
+                           prompt: Optional[str] = None,  parameters: Optional[str] = None):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
     except Storybook.DoesNotExist:
@@ -62,28 +64,24 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
         prompt = ""
 
     if parameters is None:
-        parameters = {"sd_iteration": 80, "story_chapter": "chapter_2_prompt"}
+        parameters = {"strength": 0.1, "story_chapter": "chapter_2_prompt"}
     else:
         parameters = json.loads(parameters)
 
     pil_image = PILImage.open(image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
 
-    raw_img_caption = generate_image_caption(pil_image)
-    img2img_prompt = f"{prompt}, {raw_img_caption}, {config['img_enhancement_prompt']}"
+    img2img_prompt = f"{prompt}, {config['img_enhancement_prompt']}"
 
     # image to image enhancement
-    generated_image = diffusion_model.run(pil_image, prompt=img2img_prompt, parameter = parameters["sd_iteration"])
-    # image to text caption generation
-    image_description = generate_image_description(generated_image, prompt=prompt, parameter = parameters["story_chapter"]) 
-
+    generated_image = diffusion_model.run(pil_image, prompt=img2img_prompt, strength = parameters["strength"])
     buf = BytesIO()
     generated_image.save(buf, format='JPEG')
     content_file = ContentFile(buf.getvalue())
 
     new_image = Image(
         storybook_id=storybook,
-        description=image_description,
+        description="",
     )
     new_image.image.save(f'{new_image.id}.jpg', content_file)
     new_image.save()
@@ -91,7 +89,6 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
     response_data = {
         "id": str(new_image.id),
         "storybook_id": str(storybook.id),
-        "description": new_image.description,
         "image": new_image.image.url if new_image.image else None 
     }
     
@@ -128,10 +125,10 @@ def update_storybook_image(request, image_id: UUID, image: UploadedFile = File(N
             buffer.tell(), 
             None
         )
-        image_description = generate_image_description(pil_image) 
-        existing_image.description = image_description
+        #image_description = generate_image_description(pil_image) 
+        #existing_image.description = image_description
 
-    existing_image.save()
+    #existing_image.save()
     
     response_data = {
         "id": str(existing_image.id),
