@@ -17,9 +17,9 @@ class Image(models.Model):
     def get_upload_to(self, filename):
         return 'storybook_images/%s/%s' % (self.storybook_id_id, filename)
     image = models.ImageField(upload_to=get_upload_to, null=True) 
-    description = models.TextField()
         
 class Description(models.Model):
     storybook_id = models.ForeignKey(Storybook, on_delete=models.CASCADE, related_name='description')
+    image_id = models.OneToOneField(Image, on_delete=models.CASCADE, unique=True)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     description = models.CharField(max_length=250)

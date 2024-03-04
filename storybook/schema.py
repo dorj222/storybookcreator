@@ -38,7 +38,6 @@ class ImageResponseSchema(Schema):
 class ImageGetStorybookImages(Schema):
     id: UUID
     image: File
-    description: str 
     class Config:
         arbitrary_types_allowed = True
 
@@ -52,10 +51,12 @@ class DescriptionSchema(Schema):
 class DescriptionResponseSchema(Schema):
     id: UUID
     storybook_id: UUID
+    image_id: UUID 
     description: str
     
 class DescriptionAllSchema(Schema):
     id: UUID
+    image_id: UUID
     description: str
 
 class DescriptionListResponseSchema(Schema):

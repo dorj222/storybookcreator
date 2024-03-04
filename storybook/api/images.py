@@ -36,16 +36,20 @@ def get_storybook_images(request, storybook_id: UUID):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
         images = Image.objects.filter(storybook_id=storybook)
-        image_data_list = [
-            {'id': str(image.id), 
-             'image': image.image.url if image.image else None, 
-             'description': image.description} for image in images]
+
+        image_data_list = []
+        for image in images:
+            image_data_list.append(
+                {'id': str(image.id), 
+                 'image': image.image.url if image.image else None
+                }
+            )
+
         response_data = {
             "storybook_id": str(storybook.id),
             "image_list": image_data_list,
         }
         return response_data
-    
     except Storybook.DoesNotExist:
         return 404, {"message": "Storybook does not exist"}
     except Image.DoesNotExist:
@@ -124,15 +128,11 @@ def update_storybook_image(request, image_id: UUID, image: UploadedFile = File(N
             buffer.tell(), 
             None
         )
-        #image_description = generate_image_description(pil_image) 
-        #existing_image.description = image_description
-
-    #existing_image.save()
+        existing_image.save()
     
     response_data = {
         "id": str(existing_image.id),
         "storybook_id": str(existing_image.storybook_id.id),
-        "description": existing_image.description,
         "image": existing_image.image.url if existing_image.image else None
     }
     return 200, response_data
