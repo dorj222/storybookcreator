@@ -1,11 +1,9 @@
 # views.py
-from ninja import Router, Schema
+from ninja import Router
 from django.http import JsonResponse
 from ninja import Router, File
 from ninja.files import UploadedFile
-from PIL import Image as PILImage
 from typing import Optional
-
 
 from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateStorySchema
 from storybook.llm_models.tiny_llama import generate_title

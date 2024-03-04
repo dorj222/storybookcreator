@@ -19,11 +19,11 @@ pipe = pipeline("text-generation",
                 torch_dtype=torch.bfloat16, 
                 device_map="auto")
 
-def generate_description_story(user_input: str, parameter) -> str:
+def generate_description_story(user_input: str, chapter_index) -> str:
     messages = [
         {
             "role": "system",
-            "content": config[parameter],
+            "content": config[chapter_index],
         },
         {"role": "user", "content": user_input},
     ]

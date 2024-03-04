@@ -68,7 +68,7 @@ def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = Fi
         prompt = ""
 
     if parameters is None:
-        parameters = {"strength": 0.1, "story_chapter": "chapter_2_prompt"}
+        parameters = {"strength": 0.1, "story_chapter": "ch2"}
     else:
         parameters = json.loads(parameters)
 
