@@ -4,8 +4,10 @@ from transformers import pipeline
 import torch
 from storybook.schema import GenerateTextSchema
 import json
+
 import os
 import gc
+import re
 
 # Import config file
 config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
@@ -23,7 +25,7 @@ def generate_description_story(user_input: str, chapter_index) -> str:
     messages = [
         {
             "role": "system",
-            "content": config[chapter_index],
+            "content": config["narrator_prompt"] + config[chapter_index],
         },
         {"role": "user", "content": user_input},
     ]
@@ -36,19 +38,17 @@ def generate_description_story(user_input: str, chapter_index) -> str:
 
     # Extract the generated text
     generated_text = outputs[0]["generated_text"]
+    generated_text = generated_text.split('\n<|user|>\n', 1)
+    
     # Remove "Narration:" and "\n\n" from the generated text
-    generated_text = generated_text.replace("Narration:", "").replace("\n\n", "").replace("\n", "").replace("\\", "")
-    # Select the first 3 sentences
+    generated_text = generated_text[1].replace("\n<|assistant|>\n", ". ").replace("Narration:", " ").replace("</s>", "") 
+
+    # # Select the first 3 sentences
     generated_text = generated_text.split('.')
     generated_text = ".".join(generated_text[:3])
-    assistant_index = generated_text.find("<|assistant|>")
     gc.collect()
     torch.cuda.empty_cache()
-    if assistant_index != -1:
-        assistant_response = generated_text[assistant_index + len("<|assistant|>"):]
-        return assistant_response.strip()
-    else:
-        return "Assistant response not generated"
+    return generated_text
     
 def generate_title(user_input: str) -> str:
     messages = [
