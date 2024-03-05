@@ -20,7 +20,7 @@ def generate_storybook_title(request, data: GenerateTextSchema):
 
 @router.post("/translations")
 def generate_translations(request, data: TranslateTextSchema):
-    title_text = translate_text(data.user_input)
+    title_text = translate_text(data.user_input, data.tgt_lang)
     return JsonResponse({'generated_text': title_text})
 
 @router.post("/descriptions")

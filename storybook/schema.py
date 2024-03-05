@@ -72,8 +72,9 @@ class GenerateStorySchema(Schema):
     chapter: int
 
 class TranslateTextSchema(Schema):
+    tgt_lang: str
     user_input: str
-
+    
 class NotFoundSchema(Schema):
     message: str
     
