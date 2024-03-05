@@ -6,10 +6,11 @@ from ninja.files import UploadedFile
 from typing import Optional
 
 from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateStorySchema
+
+# Import LLM Models
 from storybook.llm_models.tiny_llama import generate_title
 from storybook.llm_models.seamless import translate_text
 from storybook.llm_models.blip import generate_image_description
-# LLM Model BLIP for description text generation
 from storybook.llm_models.blip import generate_image_caption
 
 router = Router()

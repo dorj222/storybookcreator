@@ -8,10 +8,10 @@
     "guidance_scale": 0.0,
     "num_inference_steps": 10,
     "img_enhancement_prompt": " children's book illustration",
-    "ch1" : "Please consider the next sentences and starts a children's storybook story in the voice of a children's storybook narrator. Please begin the story with Narration:",
-    "ch2" : "Please consider the next sentences and continues a children's storybook story in the voice of a children's storybook narrator. Please begin the story with Narration:",
-    "ch3" : "Please consider the next sentences and continues a children's storybook story in the voice of a children's storybook narrator. Please begin the story with Narration:",
-    "ch4" : "Please consider the next sentences and ends a children's storybook story in the voice of a children's storybook narrator. Please begin the story with Narration:",
+    "ch1" : "Please begins a children's storybook story in the voice of a children's storybook narrator.",
+    "ch2" : "Please continues a children's storybook story in the voice of a children's storybook narrator.",
+    "ch3" : "Please continues a children's storybook story in the voice of a children's storybook narrator.",
+    "ch4" : "Please ends a children's storybook story in the voice of a children's storybook narrator.",
     "title_prompt" : "Please consider the next following text and generate a children's storybook title with Title: keyword" 
   }
   

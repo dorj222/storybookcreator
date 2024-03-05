@@ -1,5 +1,6 @@
 from transformers import BlipProcessor, BlipForConditionalGeneration
 from storybook.llm_models.tiny_llama import generate_description_story
+from storybook.llm_models.mistral import generate_description_story_mistral
 from PIL import Image as PILImage
 import torch
 import gc
@@ -16,6 +17,7 @@ def generate_image_description(pil_image, prompt, chapter_index):
     image_caption = processor.decode(out[0], skip_special_tokens=True)
     image_caption = prompt + " " + image_caption
     children_story = generate_description_story(image_caption, chapter_index)
+    # children_story = generate_description_story_mistral(image_caption, chapter_index)
     gc.collect()
     torch.cuda.empty_cache()
     return children_story
