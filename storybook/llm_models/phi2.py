@@ -5,16 +5,24 @@ from storybook.schema import GenerateTextSchema
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 import torch
+import json
+import os
 import gc
 
-def generate_description_story_dolphin_phi2(user_input: str, chapter_index) -> str:
-    gc.collect()
-    torch.cuda.empty_cache()
-    torch.set_default_device("cuda")
-    model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2", torch_dtype="auto", trust_remote_code=True)
-    tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
+# Import config file
+config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
+# Load configuration from config.json
+with open(config_path, "r") as config_file:
+    config = json.load(config_file)
 
-    system_message = "You are my children's storybook narrator. " + chapter_index 
+def generate_description_story_msft_phi2(user_input: str, chapter_index) -> str:
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model = AutoModelForCausalLM.from_pretrained("microsoft/phi-2", torch_dtype="auto", trust_remote_code=True)
+    model = model.to(device)
+
+    tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
+    
+    system_message = "You are my children's storybook narrator. Please consider the next texts and continues a children's storybook story in the voice of a children's storybook narrator.", 
     prompt = user_input
 
     prompt_template=f'''<|im_start|>system
@@ -23,16 +31,15 @@ def generate_description_story_dolphin_phi2(user_input: str, chapter_index) -> s
     {prompt}<|im_end|>
     <|im_start|>assistant
     '''
-
     inputs = tokenizer(prompt_template, return_tensors="pt", return_attention_mask=False)
-
-    outputs = model.generate(**inputs, max_length=256)
-    generated_text = tokenizer.batch_decode(outputs)[0]
     gc.collect()
     torch.cuda.empty_cache()
-    generated_text.strip()
-    generated_text = generated_text.split('user\n', 1)
-    return generated_text[1]
+
+    inputs = {k: v.to(device) for k, v in inputs.items()}  # moving inputs to appropriate device
+    
+    outputs = model.generate(**inputs, max_length=256)
+    generated_text = tokenizer.batch_decode(outputs)[0]
+    return generated_text
 
 def generate_title(user_input: str) -> str:
     messages = [

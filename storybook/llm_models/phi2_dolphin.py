@@ -2,48 +2,47 @@ from ninja import Router, Schema
 from django.http import JsonResponse
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from storybook.schema import GenerateTextSchema
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 import torch
+import json
+import os
 import gc
 
-import os
-os.environ["CUDA_HOME"] = "/usr/local/cuda"
+# Import config file
+config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
+# Load configuration from config.json
+with open(config_path, "r") as config_file:
+    config = json.load(config_file)
 
-import torch
-assert torch.cuda.is_available()
-assert torch.backends.cudnn.enabled
+def generate_description_story_dolphin_phi2(user_input: str, chapter_index) -> str:
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+    model = AutoModelForCausalLM.from_pretrained("cognitivecomputations/dolphin-2_6-phi-2", torch_dtype="auto", trust_remote_code=True)
+    model = model.to(device)
 
-def generate_description_story_mistral(user_input: str, chapter_index) -> str:
-    model_name_or_path = "TheBloke/Mistral-7B-OpenOrca-GPTQ"
+    tokenizer = AutoTokenizer.from_pretrained("cognitivecomputations/dolphin-2_6-phi-2", trust_remote_code=True)
     
-    # Load OpenOrca model and tokenizer
-    model = AutoModelForCausalLM.from_pretrained(model_name_or_path, device_map="auto", trust_remote_code=False, revision="main")
-    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=True)
-    device = "cuda" 
-    model.to(device)
-    
-    gc.collect()
-    torch.cuda.empty_cache()
-
-    system_message = "You are my children's storybook narrator. Please continues a children's storybook story in the voice of a children's storybook narrator."
+    system_message = "You are my children's storybook narrator. Please consider the next texts and continues a children's storybook story in the voice of a children's storybook narrator.", 
     prompt = user_input
+
     prompt_template=f'''<|im_start|>system
     {system_message}<|im_end|>
     <|im_start|>user
     {prompt}<|im_end|>
     <|im_start|>assistant
     '''
-
-    input_ids = tokenizer(prompt_template, return_tensors='pt').input_ids.cuda()
-    outputs = model.generate(inputs=input_ids, max_new_tokens=64, do_sample=True, temperature=0.7, top_k=40, top_p=0.95, repetition_penalty=1.1)
-    generated_text = tokenizer.decode(outputs[0])
+    inputs = tokenizer(prompt_template, return_tensors="pt", return_attention_mask=False)
     gc.collect()
     torch.cuda.empty_cache()
-    generated_text.strip()
-    generated_text = generated_text.split('user\n', 1)
-    return generated_text[1]
 
+    inputs = {k: v.to(device) for k, v in inputs.items()}  # moving inputs to appropriate device
+    
+    outputs = model.generate(**inputs, max_length=256)
+    generated_text = tokenizer.batch_decode(outputs)[0]
+    # print(generated_text)
+    return generated_text
+    
 def generate_title(user_input: str) -> str:
     messages = [
         {
