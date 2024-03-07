@@ -10,11 +10,10 @@ model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-capt
 def generate_image_description(pil_image, prompt, chapter_index):
     pil_image = PILImage.open(pil_image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
-    text = "What do you see?"
-    inputs = processor(pil_image, text, return_tensors="pt")
+    inputs = processor(pil_image, return_tensors="pt")
     out = model.generate(**inputs)
     image_caption = processor.decode(out[0], skip_special_tokens=True)
-    image_caption = f"{prompt}; {image_caption}. "
+    image_caption = f"{image_caption}. {prompt}."
     children_story = generate_description_story(image_caption, chapter_index)
     gc.collect()
     torch.cuda.empty_cache()

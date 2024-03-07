@@ -38,7 +38,6 @@ def generate_description_story(user_input: str, chapter_index) -> str:
 
     # Extract the generated text
     generated_text = outputs[0]["generated_text"]
-    print(generated_text)
     generated_text = generated_text.split('\n<|assistant|>\n', 1)
     generated_text = generated_text[1]
     
@@ -47,7 +46,7 @@ def generate_description_story(user_input: str, chapter_index) -> str:
 
     # # # Select the first 3 sentences
     generated_text = generated_text.split('.')
-    generated_text = ".".join(generated_text[:4])
+    generated_text = ".".join(generated_text[:3])
     gc.collect()
     torch.cuda.empty_cache()
     return generated_text
