@@ -7,12 +7,13 @@
     "strength": 0.1,
     "guidance_scale": 0.0,
     "num_inference_steps": 10,
-    "narrator_prompt" : "You are my children's storybook narrator. ",
     "img_enhancement_prompt": " children's book illustration",
-    "ch1" : "Please begins a children's storybook story.",
-    "ch2" : "Please continues a children's storybook story.",
-    "ch3" : "Please continues a children's storybook story.",
-    "ch4" : "Please ends a children's storybook story.",
+    "narrator_prompt_start" : "You are my children's storybook narrator that narrates a new story based on the text provided by the user.",
+    "narrator_prompt_end" : "Please continue a children's storybook story.",
+    "ch1" : "Please begins a children's storybook story considering the following: ",
+    "ch2" : "Please consider the first part of the story: ",
+    "ch3" : "Please consider the second part of the story: ",
+    "ch4" : "Please consider the third part of the story: ",
     "title_prompt" : "Please consider the following text and generate a children's storybook title with Title: keyword"
   }
   

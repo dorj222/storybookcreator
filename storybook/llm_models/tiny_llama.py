@@ -25,9 +25,9 @@ def generate_description_story(user_input: str, chapter_index) -> str:
     messages = [
         {
             "role": "system",
-            "content": config["narrator_prompt"] + config[chapter_index],
+            "content": config["narrator_prompt_start"] ,
         },
-        {"role": "user", "content": user_input},
+        {"role": "user", "content": config[chapter_index] + user_input + config["narrator_prompt_end"] },
     ]
 
     # Apply chat template and generate text
@@ -38,14 +38,16 @@ def generate_description_story(user_input: str, chapter_index) -> str:
 
     # Extract the generated text
     generated_text = outputs[0]["generated_text"]
-    generated_text = generated_text.split('\n<|user|>\n', 1)
+    print(generated_text)
+    generated_text = generated_text.split('\n<|assistant|>\n', 1)
+    generated_text = generated_text[1]
     
-    # Remove "Narration:" and "\n\n" from the generated text
-    generated_text = generated_text[1].replace("\n<|assistant|>\n", ". ").replace("Narration:", " ").replace("</s>", "") 
+    # Remove "Narration:" and "\n" from the generated text
+    generated_text = generated_text.replace("\n\n", ". ")
 
-    # # Select the first 3 sentences
+    # # # Select the first 3 sentences
     generated_text = generated_text.split('.')
-    generated_text = ".".join(generated_text[:3])
+    generated_text = ".".join(generated_text[:4])
     gc.collect()
     torch.cuda.empty_cache()
     return generated_text
