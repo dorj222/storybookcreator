@@ -14,6 +14,7 @@
     "ch2" : "Please consider the first part of the story: ",
     "ch3" : "Please consider the second part of the story: ",
     "ch4" : "Please consider the third part of the story: ",
-    "title_prompt" : "Please consider the following text and generate a children's storybook title with Title: keyword"
+    "title_prompt" : "Please consider the following text and generate a children's storybook title with Title: keyword",
+    "complete_prompt_part1" : "Please merge following two sentences with Complete: keyword"
   }
   
