@@ -1,4 +1,4 @@
-# Human-AI Co-Creator REST API
+# Storybook Co-Creator
 
 This application, developed with Django, functions as the backend system for a Unity frontend application, forming a cohesive Human-AI interactive environment. The platform is central to a thesis project aimed at exploring perceived ownership in human-AI co-creations, with a specific focus on the process of children's storybook creation. Empowered with Django, Django Ninja, and various AI models, it ensures smooth management of storybooks, image operations, and story descriptions in multiple languages.
 
