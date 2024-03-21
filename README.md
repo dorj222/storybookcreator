@@ -1,12 +1,14 @@
 # Human-AI Co-Creator REST API
 
-This Django application provides REST API endpoints for a Human-AI co-creator application. It leverages Django and the Django Ninja library to offer a seamless API for managing storybooks and associated images.
+This application, developed with Django, functions as the backend system for a Unity frontend application, forming a cohesive Human-AI interactive environment. The platform is central to a thesis project aimed at exploring perceived ownership in human-AI co-creations, with a specific focus on the process of children's storybook creation. Empowered with Django, Django Ninja, and various AI models, it ensures smooth management of storybooks, image operations, and story descriptions in multiple languages.
 
 ## Features
 
-- **Storybooks Management:** Create, read, update, and delete storybooks.
-- **Image CRUD Operations:** Upload, retrieve, update, and delete images associated with storybooks.
-- **SQLite Database:** The application uses SQLite for data storage.
+- **Storybooks Management:** Facilitates the creation, retrieval, update, and deletion of storybooks via dedicated REST API endpoints
+- **Image Management:** Utilizes Stable Diffusion XL Turbo for the enhancement of images and provides supportive REST API endpoints for image-related operations
+- **Description Management:** Integrates BLIP and TinyLlama AI models to generate story descriptions for storybooks and allows their management via dedicated REST API endpoints
+- **Multilingual Support:** Incorporates Seamless LLM model to translate English text into German, supported by a designated REST API endpoint
+- **SQLite Database:** The application uses SQLite for data storage
 
 ## Requirements
 
@@ -21,7 +23,7 @@ This Django application provides REST API endpoints for a Human-AI co-creator ap
 
     ```bash
     git clone https://github.com/dorj222/storybookcreator.git
-    cd your-repo
+    cd storybookcreator
     ```
 
 2. Create a virtual environment:
@@ -64,7 +66,7 @@ This Django application provides REST API endpoints for a Human-AI co-creator ap
 
 6. Download AI models
     ```bash
-    wget https://civitai.com/api/download/models/254091
+    wget https://civitai.com
     ```
 
 7. Run migrations to apply database changes:
@@ -85,17 +87,28 @@ Django Ninja provides automated documentation at [http://127.0.0.1:8000/api/docs
 ## API Endpoints
 
 - **Storybooks:**
-  - `GET /storybooks`: Retrieve all storybooks.
-  - `GET /storybooks/{storybook_id}`: Retrieve a storybook by ID.
-  - `POST /storybooks`: Create a new storybook.
-  - `PUT /storybooks/{storybook_id}`: Update a storybook by ID.
-  - `DELETE /storybooks/{storybook_id}`: Delete a storybook by ID.
+  - `GET /storybooks`: Retrieve all storybooks
+  - `GET /storybooks/{storybook_id}`: Retrieve a storybook by ID
+  - `POST /storybooks`: Create a new storybook
+  - `PUT /storybooks/{storybook_id}`: Update a storybook by ID
+  - `DELETE /storybooks/{storybook_id}`: Delete a storybook by ID
 
 - **Images:**
-  - `GET /images/{storybook_id}`: Retrieve images associated with a storybook.
-  - `POST /images/{storybook_id}`: Upload a new image for a storybook.
-  - `PUT /images/{image_id}`: Update an image by ID.
-  - `DELETE /images/delete/{image_id}`: Delete an image by ID.
+  - `GET /images/{storybook_id}`: Retrieve images associated with a storybook
+  - `POST /images/{storybook_id}`: Upload a new image for a storybook
+  - `PUT /images/{image_id}`: Update an image by ID
+  - `DELETE /images/{image_id}`: Delete an image by ID
+
+- **Descriptions:**
+  - `GET /descriptions/getall/{storybook_id}/`: Retrieve all descriptions associated with a storybook
+  - `GET /descriptions/{description_id}/`: Retrieve a description by ID
+  - `POST /descriptions/{storybook_id}/{image_id}`: Upload a new description
+  - `PUT /descriptions/{description_id}`: Update a description by ID
+  - `DELETE /descriptions/{description_id}`: Delete a description by ID
+
+- **LLM Features**
+  - `PUT /chat/translations`: Translate an English text to a target language
+  - `PUT /chat/titles`: Generate a storybook title
 
 ## License
 
