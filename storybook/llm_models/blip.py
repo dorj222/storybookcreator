@@ -21,11 +21,11 @@ def generate_image_description(pil_image, prompt, chapter_index):
     out = model.generate(**inputs)
     image_caption = processor.decode(out[0], skip_special_tokens=True)
     image_caption = f"{prompt}; {image_caption}"
-    # children_story = generate_description_story(image_caption, chapter_index)
+    children_story = generate_description_story(image_caption, chapter_index)
     # children_story = generate_description_story_dolphin_phi2(image_caption, chapter_index)
     # children_story = generate_description_story_mistral(image_caption, chapter_index)
-    # children_story = generate_description_story_dolphin_phi2(image_caption, chapter_index)
-    children_story = generate_description_story_gemma(image_caption, chapter_index)
+    # children_story = generate_description_story_msft_phi2(image_caption, chapter_index)
+    # children_story = generate_description_story_gemma(image_caption, chapter_index)
     
     gc.collect()
     torch.cuda.empty_cache()

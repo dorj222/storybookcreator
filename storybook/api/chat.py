@@ -11,6 +11,7 @@ from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateSt
 from storybook.llm_models.tiny_llama import generate_title
 from storybook.llm_models.seamless import translate_text
 from storybook.llm_models.blip import generate_image_description
+from storybook.llm_models.blip_instr import complete_sentence
 from storybook.llm_models.blip import generate_image_caption
 
 import time
@@ -30,11 +31,12 @@ def generate_translations(request, data: TranslateTextSchema):
 def generate_descriptions(request, image: UploadedFile = File(...), prompt: Optional[str] = None,  chapter_index: Optional[str] = None):
     start_time = time.time()
     # image to text caption generation
-    generated_description = generate_image_description(pil_image=image,prompt=prompt, chapter_index=chapter_index) 
+    generated_description = complete_sentence(pil_image=image,prompt=prompt) 
+    # generated_description = generate_image_description(pil_image=image,prompt=prompt, chapter_index=chapter_index) 
 
     end_time = time.time()
     elapsed_time = end_time - start_time
-    print(f"Execution time: {elapsed_time} seconds")
+    # print(f"Execution time: {elapsed_time} seconds")
     response_data = {
         "generated_description": generated_description
     } 
