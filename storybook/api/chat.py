@@ -11,6 +11,7 @@ from storybook.llm_models.seamless import translate_text
 from storybook.llm_models.blip import generate_image_description
 # LLM Model BLIP for description text generation
 from storybook.llm_models.blip import generate_image_caption, generate_initial_text
+from storybook.llm_models.blip_instruct import complete_sentence
 
 router = Router()
 @router.post("/titles")
@@ -24,9 +25,9 @@ def generate_translations(request, data: TranslateTextSchema):
     return JsonResponse({'generated_text': title_text})
 
 @router.post("/storysentences")
-def generate_story_start(request, image: UploadedFile = File(...), prompt: Optional[str] = None,  chapter_index: Optional[str] = None):
+def generate_complete_sentence(request, image: UploadedFile = File(...), prompt: Optional[str] = None,  chapter_index: Optional[str] = None):
     # image to text caption generation
-    generated_description = generate_initial_text(pil_image=image,prompt=prompt) 
+    generated_description = complete_sentence(pil_image=image,prompt=prompt) 
     response_data = {
         "generated_description": generated_description
     } 
