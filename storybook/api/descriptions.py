@@ -10,6 +10,8 @@ from storybook.models import Storybook
 from storybook.models import Description
 from storybook.models import Image
 from storybook.llm_models.blip import generate_image_description
+from storybook.llm_models.blip_instruct import continue_story
+from storybook.llm_models.mistral import m_continue_story
 from storybook.schema import DescriptionSchema, DescriptionResponseSchema, NotFoundSchema, DescriptionListResponseSchema
 
 router = Router()
@@ -56,7 +58,7 @@ def description(request, description_id: UUID):
 # Create a description with a storybook id
 @router.post("/{storybook_id}/{image_id}", response={201: DescriptionResponseSchema, 500: NotFoundSchema})
 def create_description(request, storybook_id: UUID, image_id: UUID, image: UploadedFile = File(...), 
-                       prompt: Optional[str] = None, chapter_index: Optional[str] = None):
+                       prompt: Optional[str] = None, llm: Optional[str] = None):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
         image_object = Image.objects.get(pk=image_id)
@@ -64,7 +66,15 @@ def create_description(request, storybook_id: UUID, image_id: UUID, image: Uploa
         return 404, {'message': 'Not Found'}
 
     # image to text caption generation
-    generated_description = generate_image_description(pil_image=image, prompt=prompt, chapter_index=chapter_index)
+    if(llm=="TinyLlama"):
+        generated_description = generate_image_description(pil_image=image, prompt=prompt)
+    elif(llm=="BLIPInstruct"):
+        generated_description = continue_story(pil_image=image, prompt=prompt)
+    elif(llm=="Mistral"):
+        generated_description = m_continue_story(prompt=prompt)
+
+
+    
 
     try:
         new_description = Description(

@@ -4,8 +4,6 @@ from PIL import Image as PILImage
 import torch
 import gc
 
-processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
-model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
 
 def generate_image_description(pil_image, prompt, chapter_index):
     pil_image = PILImage.open(pil_image)
@@ -34,6 +32,9 @@ def generate_initial_text(pil_image, prompt):
     return children_story
 
 def generate_image_caption(pil_image):
+    processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
+    model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
+
     pil_image = PILImage.open(pil_image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
     text = "this is a children drawing of"

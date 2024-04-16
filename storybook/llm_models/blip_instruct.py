@@ -3,10 +3,13 @@ from PIL import Image as PILImage
 import torch
 import gc
 
-processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
-model = InstructBlipForConditionalGeneration.from_pretrained("Salesforce/instructblip-vicuna-7b",load_in_8bit=True).to(device="cuda")#, load_in_8bit=True)
+
+
 
 def complete_sentence(pil_image, prompt):
+    processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
+    model = InstructBlipForConditionalGeneration.from_pretrained("Salesforce/instructblip-vicuna-7b",torch_dtype=torch.float16, load_in_8bit=True)
+
     pil_image = PILImage.open(pil_image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
     inputs = processor(images=pil_image, text=prompt, return_tensors="pt").to(device="cuda")
@@ -25,6 +28,9 @@ def complete_sentence(pil_image, prompt):
     return generated_text
 
 def continue_story(pil_image, prompt):
+    processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
+    model = InstructBlipForConditionalGeneration.from_pretrained("Salesforce/instructblip-vicuna-7b",torch_dtype=torch.float16, load_in_8bit=True)
+
     pil_image = PILImage.open(pil_image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
     
@@ -45,6 +51,9 @@ def continue_story(pil_image, prompt):
     return generated_text
 
 def image_caption(pil_image):
+    processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
+    model = InstructBlipForConditionalGeneration.from_pretrained("Salesforce/instructblip-vicuna-7b",torch_dtype=torch.float16, load_in_8bit=True)
+
     pil_image = PILImage.open(pil_image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
     

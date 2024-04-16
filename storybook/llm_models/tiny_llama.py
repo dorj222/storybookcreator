@@ -21,13 +21,13 @@ pipe = pipeline("text-generation",
                 torch_dtype=torch.bfloat16, 
                 device_map="auto")
 
-def generate_description_story(user_input: str, chapter_index) -> str:
+def generate_description_story(user_input: str) -> str:
     messages = [
         {
             "role": "system",
             "content": config["narrator_prompt_start"] ,
         },
-        {"role": "user", "content": config[chapter_index] + user_input + config["narrator_prompt_end"] },
+        {"role": "user", "content": config["ch1"] + user_input + config["narrator_prompt_end"] }
     ]
 
     # Apply chat template and generate text
