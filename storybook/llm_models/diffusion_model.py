@@ -10,15 +10,15 @@ with open(config_path, "r") as config_file:
     config = json.load(config_file)
 
 
-
-def run(image, prompt, strength):
-    pipe = StableDiffusionXLImg2ImgPipeline.from_single_file(config["sd_turbo_path_fp16"],
+pipe = StableDiffusionXLImg2ImgPipeline.from_single_file(config["sd_turbo_path_fp16"],
                                                             torch_dtype=torch.float16, 
                                                             variant="fp16",
                                                             use_safetensors=True,                                                           
                                                              guidance_scale=0.0,
                                                              num_inference_steps=10
                                                              ).to("cuda")
+def run(image, prompt, strength):
+    
     torch.cuda.empty_cache()
     gen_image = pipe(prompt, image=image, strength=strength, guidance_scale=0.0,
                                                              num_inference_steps=10).images[0]

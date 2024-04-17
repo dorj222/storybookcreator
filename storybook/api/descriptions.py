@@ -9,6 +9,7 @@ from ninja.files import UploadedFile
 from storybook.models import Storybook
 from storybook.models import Description
 from storybook.models import Image
+from storybook.llm_models.tiny_llama import generate_description_story
 from storybook.llm_models.blip import generate_image_description
 from storybook.llm_models.blip_instruct import continue_story
 from storybook.llm_models.mistral import m_continue_story
@@ -64,10 +65,10 @@ def create_description(request, storybook_id: UUID, image_id: UUID, image: Uploa
         image_object = Image.objects.get(pk=image_id)
     except (Storybook.DoesNotExist, Image.DoesNotExist):
         return 404, {'message': 'Not Found'}
-
+    #generated_description = continue_story(pil_image=image, prompt=prompt)
     # image to text caption generation
     if(llm=="TinyLlama"):
-        generated_description = generate_image_description(pil_image=image, prompt=prompt)
+        generated_description = generate_description_story(user_input=prompt)
     elif(llm=="BLIPInstruct"):
         generated_description = continue_story(pil_image=image, prompt=prompt)
     elif(llm=="Mistral"):

@@ -11,8 +11,8 @@ from storybook.llm_models.seamless import translate_text
 from storybook.llm_models.blip import generate_image_description
 # LLM Model BLIP for description text generation
 from storybook.llm_models.blip import generate_image_caption
-from storybook.llm_models.blip_instruct import complete_sentence, image_caption
-from storybook.llm_models.mistral import continue_story
+from storybook.llm_models.blip_instruct import complete_sentence, image_caption, continue_story
+from storybook.llm_models.mistral import m_continue_story
 
 
 
@@ -29,10 +29,9 @@ def generate_translations(request, data: TranslateTextSchema):
 
 @router.post("/prompts")
 def generate_story_continuationi(request, image: UploadedFile = File(...), 
-                               prompt: Optional[str] = None, 
-                               chapter_index: Optional[str] = None):
+                               prompt: Optional[str] = None):
     # image to text caption generation
-    generated_description = continue_story(prompt=prompt) 
+    generated_description = m_continue_story(prompt=prompt) 
     response_data = {
         "generated_description": generated_description
     } 

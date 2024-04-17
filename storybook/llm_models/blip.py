@@ -6,6 +6,9 @@ import gc
 
 
 def generate_image_description(pil_image, prompt, chapter_index):
+    processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
+    model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
+
     pil_image = PILImage.open(pil_image)
     pil_image = pil_image.convert("RGB").resize((512, 512))
     inputs = processor(pil_image, return_tensors="pt")
