@@ -21,21 +21,20 @@ pipe = pipeline("text-generation",
                 torch_dtype=torch.bfloat16, 
                 device_map="auto")
 
-def generate_description_story(user_input: str) -> str:
+def generate_description_story(user_input: str , ch_index: str) -> str:
     messages = [
         {
             "role": "system",
             "content": config["narrator_prompt_start"] ,
         },
-        {"role": "user", "content": config["ch1"] + user_input + config["narrator_prompt_end"] }
+        {"role": "user", "content": config[ch_index] + user_input + config["narrator_prompt_end"] }
     ]
 
     # Apply chat template and generate text
     prompt = pipe.tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=False
     )
-    outputs = pipe(prompt, max_new_tokens=128, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
-
+    outputs = pipe(prompt, max_new_tokens=128, do_sample=True, temperature=0.7, top_k=50, top_p=0.95, repetition_penalty=1.2)
     # Extract the generated text
     generated_text = outputs[0]["generated_text"]
     generated_text = generated_text.split('\n<|assistant|>\n', 1)
@@ -82,7 +81,7 @@ def generate_title(user_input: str) -> str:
     else:
         return 'Title not generated'
     
-def complete_initial_sentence(user_input: str, img_caption: str) -> str:
+def complete_initial_sentence(user_input: str, img_caption: str, chapter: str) -> str:
     messages = [
         {
             "role": "system",

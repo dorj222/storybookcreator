@@ -4,10 +4,10 @@ import torch
 import gc
 
 
+processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
+model = InstructBlipForConditionalGeneration.from_pretrained("Salesforce/instructblip-vicuna-7b",torch_dtype=torch.float16, load_in_8bit=True)
 
 def complete_sentence(pil_image, prompt):
-    processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
-    model = InstructBlipForConditionalGeneration.from_pretrained("Salesforce/instructblip-vicuna-7b",torch_dtype=torch.float16, load_in_8bit=True)
 
     #processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
     #model = InstructBlipForConditionalGeneration.from_pretrained("Salesforce/instructblip-vicuna-7b",torch_dtype=torch.float16, load_in_8bit=True)
@@ -68,9 +68,9 @@ def image_caption(pil_image):
         max_new_tokens=32,
         min_length=1,
         top_p=0.9,
-        repetition_penalty=100.0,
         length_penalty=2.0,
         temperature=1,
 )
     generated_text = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
+
     return generated_text
