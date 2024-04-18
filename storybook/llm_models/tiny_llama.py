@@ -39,13 +39,21 @@ def generate_description_story(user_input: str , ch_index: str) -> str:
     generated_text = outputs[0]["generated_text"]
     generated_text = generated_text.split('\n<|assistant|>\n', 1)
     generated_text = generated_text[1]
-    
-    # Remove "Narration:" and "\n" from the generated text
+    # Remove "\n" from the generated text
     generated_text = generated_text.replace("\n\n", ". ")
-
-    # # # Select the first 3 sentences
-    generated_text = generated_text.split('.')
-    generated_text = ".".join(generated_text[:3])
+    generated_text = re.sub(r'[!?]', '.', generated_text)
+    # Split the text into sentences
+    sentences = generated_text.split('.')
+    # Remove unqualified sentences
+    sentences = [sentence.strip() for sentence in sentences if sentence.strip() and len(sentence.strip().split()) > 1]
+    print('sentences: ', sentences)
+    # Check if the length of the generated text is more than 200 characters
+    if sentences[0] and len(sentences[0]) > 140:
+        generated_text = '. '.join(sentences[:1]) + ". "
+    elif len(generated_text) > 200 and len(sentences) > 1:
+        generated_text = '. '.join(sentences[:2]) + ". "
+    else:
+        generated_text = '. '.join(sentences[:3]) + ". " if len(sentences) > 2 else '.'.join(sentences)
     gc.collect()
     torch.cuda.empty_cache()
     return generated_text
