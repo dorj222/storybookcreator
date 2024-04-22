@@ -9,11 +9,10 @@
     "num_inference_steps": 10,
     "img_enhancement_prompt": " children's book illustration",
     "narrator_prompt_start" : "You are my children's storybook narrator that narrates a new story based on the text provided by the user.",
-    "narrator_prompt_end" : "Please continue a children's storybook story.",
-    "ch1" : "Please begins a children's storybook story considering the following: ",
-    "ch2" : "Please consider the first part of the story: ",
-    "ch3" : "Please consider the second part of the story: ",
-    "ch4" : "Please consider the third part of the story: ",
+    "narrator_prompt_end" : "\nContinuation: ",
+    "ch1" : "Continue the following story in one very short sentence.\nStory: ",
+    "ch2" : "Continue the following story in one very short sentence.\nStory: ",
+    "ch3" : "Write a happy ending for the following story.\nStory: ",
     "title_prompt" : "Please consider the following text and generate a children's storybook title with Title: keyword",
     "complete_prompt_part1" : "Please merge following two sentences with Complete: keyword"
   }
