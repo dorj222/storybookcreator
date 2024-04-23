@@ -6,7 +6,7 @@ from ninja.files import UploadedFile
 from typing import Optional
 
 from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateStorySchema
-from storybook.llm_models.tiny_llama import generate_title
+from storybook.llm_models.tiny_llama import generate_title, generate_prompts
 from storybook.llm_models.tiny_llama import generate_description_story, complete_initial_sentence
 from storybook.llm_models.seamless import translate_text
 from storybook.llm_models.blip import generate_image_caption
@@ -22,8 +22,9 @@ def generate_translations(request, data: TranslateTextSchema):
     title_text = translate_text(data.user_input, data.tgt_lang)
     return JsonResponse({'generated_text': title_text})
 
+# TODO: add a BLIP prompt provider
 @router.post("/chapterstories")
-def generate_chapter_prompt(request, ch_index: Optional[str] = None ,prompt: Optional[str] = None):
+def generate_chapter_stories(request, ch_index: Optional[str] = None, prompt: Optional[str] = None):
     generated_description = generate_description_story(user_input=prompt, ch_index=ch_index)
     response_data = {
         "generated_description": generated_description
@@ -43,6 +44,9 @@ def generate_chapter_completion(request, image: UploadedFile = File(...), prompt
 @router.post("/captions")
 def create_image_caption(request, image: UploadedFile = File(...)):
     caption = generate_image_caption(image)
-    print("CAPTION: "  + caption)
-
     return JsonResponse({'caption': caption})
+
+@router.post("/nextprompts")
+def generate_next_prompts(request, prev_story):
+    next_prompt = generate_prompts(prev_story)
+    return JsonResponse({'next_prompt': next_prompt})
