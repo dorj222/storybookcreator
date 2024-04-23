@@ -121,16 +121,17 @@ def complete_initial_sentence(user_input: str, img_caption: str, temperature: fl
         return 'Text not generated'
 
 def generate_prompts(user_input: str) -> str:
+    generated_text = generate_description_story(user_input, "ch1")
     nltk.download('punkt')
     # Tag the tokens with their parts of speech
-    tagged_tokens = pos_tag(word_tokenize(user_input))
+    tagged_tokens = pos_tag(word_tokenize(generated_text))
     # Extract verbs from the tagged tokens
     verbs = [word for word, pos in tagged_tokens if pos.startswith('V')]
-    verb_indices = [i for i, token in enumerate(word_tokenize(user_input)) if token in verbs]
+    verb_indices = [i for i, token in enumerate(word_tokenize(generated_text)) if token in verbs]
     # Find the index of the middle verb occurrence
     index = verb_indices[len(verb_indices) // 2]
     # Construct the incomplete sentence ending with the middle verb
-    incomplete_sentence = ' '.join(word_tokenize(user_input)[:index + 1])
+    incomplete_sentence = ' '.join(word_tokenize(generated_text)[:index + 1])
     gc.collect()
     torch.cuda.empty_cache()
     return incomplete_sentence
