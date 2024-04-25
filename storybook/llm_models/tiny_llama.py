@@ -12,7 +12,7 @@ import re
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
-
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 # Import config file
 config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
 # Load configuration from config.json
@@ -21,9 +21,12 @@ with open(config_path, "r") as config_file:
 
 # Load TinyLlama model
 pipe = pipeline("text-generation", 
-                model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", 
-                torch_dtype=torch.bfloat16, 
-                device_map="auto")
+               model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", 
+               torch_dtype=torch.bfloat16, 
+               device_map="auto")
+
+
+
 
 def generate_description_story(user_input: str , ch_index: str) -> str:
     messages = [
@@ -52,10 +55,8 @@ def generate_description_story(user_input: str , ch_index: str) -> str:
         sentences = generated_text.split('.')
         # Remove unqualified sentences
         sentences = [sentence.strip() for sentence in sentences if sentence.strip() and len(sentence.strip().split()) > 1]
-        if sentences[0] and len(sentences[0]) > 50:
-            generated_text = '. '.join(sentences[:1]) + ". "
-        else:
-            generated_text = '. '.join(sentences[:2]) + ". " if len(sentences) > 1 else '.'.join(sentences)
+        if sentences[:2]:
+            generated_text = '. '.join(sentences[:2]) + ". "
         gc.collect()
         torch.cuda.empty_cache()
         return generated_text
@@ -120,18 +121,34 @@ def complete_initial_sentence(user_input: str, img_caption: str, temperature: fl
     else:
         return 'Text not generated'
 
-def generate_prompts(user_input: str) -> str:
-    generated_text = generate_description_story(user_input, "ch1")
-    nltk.download('punkt')
-    # Tag the tokens with their parts of speech
-    tagged_tokens = pos_tag(word_tokenize(generated_text))
-    # Extract verbs from the tagged tokens
-    verbs = [word for word, pos in tagged_tokens if pos.startswith('V')]
-    verb_indices = [i for i, token in enumerate(word_tokenize(generated_text)) if token in verbs]
-    # Find the index of the middle verb occurrence
-    index = verb_indices[len(verb_indices) // 2]
-    # Construct the incomplete sentence ending with the middle verb
-    incomplete_sentence = ' '.join(word_tokenize(generated_text)[:index + 1])
-    gc.collect()
-    torch.cuda.empty_cache()
-    return incomplete_sentence
+
+def generate_summary(user_input: str) -> str:
+    messages = [
+        {
+            "role": "system",
+            "content": config["narrator_prompt_summarize"],
+        },
+        {"role": "user", "content": user_input},
+    ]
+    # Apply chat template and generate text
+    prompt = pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
+    outputs = pipe(prompt, max_new_tokens=64, do_sample=True, temperature=0.7, top_k=50, top_p=0.95, repetition_penalty=1.3)
+    # Extract the generated text
+    generated_text = outputs[0]["generated_text"]
+    assistant_index = generated_text.find("<|assistant|>")
+    if assistant_index != -1:
+        generated_text = generated_text.split('\n<|assistant|>\n', 1)
+        generated_text = generated_text[1]
+        # Remove "\n" from the generated text
+        generated_text = generated_text.replace("\n\n", ". ")
+        generated_text = re.sub(r'[!?]', '.', generated_text)
+        # Split the text into sentences
+        sentences = generated_text.split('.')
+        # Remove unqualified sentences
+        sentences = [sentence.strip() for sentence in sentences if sentence.strip() and len(sentence.strip().split()) > 1]
+        if sentences[0]:
+            generated_text = sentences[0]
+        return generated_text
+    else:
+        return 'Chapter story summary not generated'
+    

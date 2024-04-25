@@ -6,7 +6,8 @@ from ninja.files import UploadedFile
 from typing import Optional
 
 from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateStorySchema
-from storybook.llm_models.tiny_llama import generate_title, generate_prompts
+from storybook.llm_models.tiny_llama import generate_title
+from storybook.llm_models.phi3 import merge_sentences, generate_prompts
 from storybook.llm_models.tiny_llama import generate_description_story, complete_initial_sentence
 from storybook.llm_models.seamless import translate_text
 from storybook.llm_models.blip import generate_image_caption
@@ -22,20 +23,11 @@ def generate_translations(request, data: TranslateTextSchema):
     title_text = translate_text(data.user_input, data.tgt_lang)
     return JsonResponse({'generated_text': title_text})
 
-# TODO: add a BLIP prompt provider
-@router.post("/chapterstories")
-def generate_chapter_stories(request, ch_index: Optional[str] = None, prompt: Optional[str] = None):
-    generated_description = generate_description_story(user_input=prompt, ch_index=ch_index)
-    response_data = {
-        "generated_description": generated_description
-    } 
-    return JsonResponse(response_data)
-
-@router.post("/fullsentences")
-def generate_chapter_completion(request, image: UploadedFile = File(...), prompt: Optional[str] = None, temperature: Optional[float] = None):
+@router.post("/chapters")
+def generate_chapter_completion(request, image: UploadedFile = File(...), prompt: Optional[str] = None, temperature: Optional[float] = None, ch_index: Optional[str] = None):
     caption = generate_image_caption(image)
 
-    generated_description = complete_initial_sentence(user_input = prompt, img_caption=caption, temperature = temperature) 
+    generated_description = merge_sentences(user_input = prompt, img_caption=caption, temperature = temperature, ch_index=ch_index) 
     response_data = {
         "generated_description": generated_description
     } 
