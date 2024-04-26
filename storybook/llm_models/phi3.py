@@ -29,6 +29,7 @@ model = AutoModelForCausalLM.from_pretrained(
     device_map="cuda", 
     torch_dtype="auto", 
     trust_remote_code=True, 
+    length_penalty=0.01
 )
 tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
 pipe = pipeline(
@@ -48,23 +49,6 @@ generation_args = {
 def merge_sentences(user_input: str, img_caption: str, temperature: float, ch_index: str) -> str:
     gc.collect()
     torch.cuda.empty_cache()
-    messages = []
-    """ if ch_index == "ch1":
-        messages = [
-            {
-                "role": "system",
-                "content": config["narrator_prompt_start"] ,
-            },
-            {"role": "user", "content": config["merge_sentences"] + "Sentence 1: " + user_input  + ". Sentence 2: " + img_caption + ". Complete:"}
-        ]
-    else:
-        messages = [
-        {
-            "role": "system",
-            "content": config["narrator_prompt_start"] ,
-        },
-        {"role": "user", "content": config[ch_index] + user_input + ". " + img_caption + ". "}
-    ] """
     messages = [
             {
                 "role": "system",
@@ -74,9 +58,26 @@ def merge_sentences(user_input: str, img_caption: str, temperature: float, ch_in
         ]
     # Apply chat template and generate texts
     #prompt = pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
-    outputs = pipe(messages,  max_new_tokens=128, return_full_text= False, length_penalty=0.69, do_sample=True, temperature=temperature, top_k=50, top_p=0.95)
+    outputs = pipe(messages,  max_new_tokens=42, return_full_text= False, length_penalty=0.01, do_sample=True, temperature=temperature, top_k=50, top_p=0.95)
+    
     generated_text = outputs[0]["generated_text"]
-    return generated_text
+    # data parsing
+    print("Outputs: " , generated_text, len(generated_text))
+    if len(generated_text) > 5:
+        generated_text = generated_text.replace("\n\n", ". ")
+        generated_text = re.sub(r'[!?;]', '.', generated_text)
+        print("generate_prompt_helper: ", generated_text)
+        # Split the text into sentences
+        sentences = generated_text.split('.')
+        # Remove unqualified sentences
+        gc.collect()
+        torch.cuda.empty_cache()
+        sentences = [sentence.strip() for sentence in sentences if sentence.strip() and len(sentence.strip().split()) > 1]
+        if sentences[:1]:
+            generated_text = '. '.join(sentences[:1]) + ". "
+            return generated_text
+    else:
+        return 'Chapter story not generated'
 
 def generate_chapters(user_input: str , ch_index: str) -> str:
     messages = [
@@ -84,14 +85,14 @@ def generate_chapters(user_input: str , ch_index: str) -> str:
             "role": "system",
             "content": config["narrator_prompt_start"] ,
         },
-        {"role": "user", "content": config[ch_index] + user_input + config["narrator_prompt_end"] }
+        {"role": "user", "content": config[ch_index] + user_input}
     ]
 
     # Apply chat template and generate text
     prompt = pipe.tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=False
     )
-    outputs = pipe(prompt, max_new_tokens=128, do_sample=True, temperature=0.7, top_k=50, top_p=0.95, repetition_penalty=1.3)
+    outputs = pipe(prompt, max_new_tokens=64, do_sample=True, temperature=0.7, top_k=50, top_p=0.95, repetition_penalty=1.3, length_penalty=0.5)
     # Extract the generated text
     generated_text = outputs[0]["generated_text"]
     assistant_index = generated_text.find("<|assistant|>")
