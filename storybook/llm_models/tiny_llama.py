@@ -64,35 +64,37 @@ def generate_description_story(user_input: str , ch_index: str) -> str:
         return 'Chapter story not generated'
     
 def generate_title(user_input: str) -> str:
-    messages = [
-        {
-            "role": "system",
-            "content": config["title_prompt"],
-        },
-        {"role": "user", "content": user_input},
-    ]
-
-    # Apply chat template and generate text
-    prompt = pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
-    outputs = pipe(prompt, max_new_tokens=256, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
-
-    # Extract the generated text
-    generated_text = outputs[0]["generated_text"]
-    # Find the assistant's response start index
-    assistant_index = generated_text.find("<|assistant|>")
-    gc.collect()
-    torch.cuda.empty_cache()
-    if assistant_index != -1:
-        # Get the assistant's response
-        assistant_response = generated_text[assistant_index + len("<|assistant|>"):]
-        # Extract the first two lines (title) of the assistant's response
-        title = "\n".join(assistant_response.split("\n")[:2]).strip()
-        # Remove 'Title: ' prefix if it exists
-        if title.startswith("Title: "):
-            title = title[len("Title: "):]
-        return title
-    else:
-        return 'Title not generated'
+    attempt, max_attempt = 0, 5
+    while attempt < max_attempt:
+        messages = [
+            {
+                "role": "system",
+                "content": config["title_prompt"],
+            },
+            {"role": "user", "content": user_input},
+        ]
+        # Apply chat template and generate text
+        prompt = pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
+        outputs = pipe(prompt, max_new_tokens=128, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
+        attempt += 1
+        # Extract the generated text
+        generated_text = outputs[0]["generated_text"]
+        # Find the assistant's response start index
+        assistant_index = generated_text.find("<|assistant|>")
+        gc.collect()
+        torch.cuda.empty_cache()
+        if assistant_index != -1 and "Title:" in generated_text:
+            # Get the assistant's response
+            assistant_response = generated_text[assistant_index + len("<|assistant|>"):]
+            # Extract the first two lines (title) of the assistant's response
+            title = "\n".join(assistant_response.split("\n")[:2]).strip()
+            # Remove 'Title: ' prefix if it exists
+            print("attempt: ", attempt, "title: ", title)
+            if title.startswith("Title: "):
+                title = title[len("Title: "):]
+            if len(title) < 120:
+                return title.strip('"')
+    return 'Title not generated'
     
 def complete_initial_sentence(user_input: str, img_caption: str, temperature: float) -> str:
     messages = [
