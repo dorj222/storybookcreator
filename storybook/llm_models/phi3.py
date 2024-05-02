@@ -1,8 +1,5 @@
-from ninja import Router, Schema
-from django.http import JsonResponse
 from transformers import pipeline
 import torch
-from storybook.schema import GenerateTextSchema
 import json
 
 import os
@@ -37,14 +34,6 @@ pipe = pipeline(
     model=model,
     tokenizer=tokenizer,
 )
-
-generation_args = {
-    "max_new_tokens": 500,
-    "return_full_text": False,
-    "temperature": 0.0,
-    "do_sample": False,
-}
-
 
 def merge_sentences(user_input: str, img_caption: str, temperature: float, ch_index: str) -> str:
     gc.collect()

@@ -5,10 +5,9 @@ from ninja import Router, File
 from ninja.files import UploadedFile
 from typing import Optional
 
-from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateStorySchema
+from storybook.schema import GenerateTextSchema, TranslateTextSchema
 from storybook.llm_models.tiny_llama import generate_title
 from storybook.llm_models.phi3 import merge_sentences, generate_prompts
-from storybook.llm_models.tiny_llama import generate_description_story, complete_initial_sentence
 from storybook.llm_models.seamless import translate_text
 from storybook.llm_models.blip import generate_image_caption
 

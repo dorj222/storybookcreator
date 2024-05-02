@@ -1,18 +1,12 @@
-from ninja import Router, Schema
-from django.http import JsonResponse
 from transformers import pipeline
 import torch
-from storybook.schema import GenerateTextSchema
 import json
 
 import os
 import gc
 import re
 
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.tag import pos_tag
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+from transformers import pipeline
 # Import config file
 config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
 # Load configuration from config.json
@@ -24,9 +18,6 @@ pipe = pipeline("text-generation",
                model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", 
                torch_dtype=torch.bfloat16, 
                device_map="auto")
-
-
-
 
 def generate_description_story(user_input: str , ch_index: str) -> str:
     messages = [
@@ -122,7 +113,6 @@ def complete_initial_sentence(user_input: str, img_caption: str, temperature: fl
         return assistant_response
     else:
         return 'Text not generated'
-
 
 def generate_summary(user_input: str) -> str:
     messages = [
