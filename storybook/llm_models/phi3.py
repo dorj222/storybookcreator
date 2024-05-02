@@ -54,7 +54,7 @@ def merge_sentences(user_input: str, img_caption: str, temperature: float, ch_in
                 "role": "system",
                 "content": config["narrator_prompt_start"] ,
             },
-            {"role": "user", "content": config["merge_sentences"] + "Sentence 1: " + user_input  + ". Sentence 2: " + img_caption + ". Complete:"}
+            {"role": "user", "content": config["merge_sentences"] + "Sentence 1: " + user_input  + ". Sentence 2: " + img_caption + "."}
         ]
     # Apply chat template and generate texts
     #prompt = pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
