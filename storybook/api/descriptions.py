@@ -9,7 +9,6 @@ from ninja.files import UploadedFile
 from storybook.models import Storybook
 from storybook.models import Description
 from storybook.models import Image
-from storybook.llm_models.blip import generate_image_description
 from storybook.schema import DescriptionSchema, DescriptionResponseSchema, NotFoundSchema, DescriptionListResponseSchema
 
 router = Router()
@@ -55,22 +54,18 @@ def description(request, description_id: UUID):
 
 # Create a description with a storybook id
 @router.post("/{storybook_id}/{image_id}", response={201: DescriptionResponseSchema, 500: NotFoundSchema})
-def create_description(request, storybook_id: UUID, image_id: UUID, image: UploadedFile = File(...), 
-                       prompt: Optional[str] = None, chapter_index: Optional[str] = None):
+def create_description(request, storybook_id: UUID, image_id: UUID, body_data: DescriptionSchema):
     try:
         storybook = Storybook.objects.get(pk=storybook_id)
         image_object = Image.objects.get(pk=image_id)
     except (Storybook.DoesNotExist, Image.DoesNotExist):
         return 404, {'message': 'Not Found'}
-
     # image to text caption generation
-    generated_description = generate_image_description(pil_image=image, prompt=prompt, chapter_index=chapter_index)
-
     try:
         new_description = Description(
             storybook_id=storybook,
             image_id=image_object,
-            description=generated_description
+            description=body_data.description
         )
         new_description.save()
     except Exception as e:

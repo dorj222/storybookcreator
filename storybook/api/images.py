@@ -19,10 +19,6 @@ from typing import Optional
 from storybook.llm_models import diffusion_model
 import json
 
-import time
-from django.http import JsonResponse
-
-
 # Import config file
 config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
 # Load configuration from config.json

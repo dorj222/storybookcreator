@@ -5,13 +5,11 @@ from ninja import Router, File
 from ninja.files import UploadedFile
 from typing import Optional
 
-from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateStorySchema
+from storybook.schema import GenerateTextSchema, TranslateTextSchema
 from storybook.llm_models.tiny_llama import generate_title
+from storybook.llm_models.phi3 import merge_sentences, generate_prompts
 from storybook.llm_models.seamless import translate_text
-from storybook.llm_models.blip import generate_image_description
-# LLM Model BLIP for description text generation
-from storybook.llm_models.blip import generate_image_caption, generate_initial_text
-from storybook.llm_models.blip_instruct import complete_sentence
+from storybook.llm_models.blip import generate_image_caption
 
 router = Router()
 @router.post("/titles")
@@ -24,10 +22,11 @@ def generate_translations(request, data: TranslateTextSchema):
     title_text = translate_text(data.user_input, data.tgt_lang)
     return JsonResponse({'generated_text': title_text})
 
-@router.post("/storysentences")
-def generate_complete_sentence(request, image: UploadedFile = File(...), prompt: Optional[str] = None,  chapter_index: Optional[str] = None):
-    # image to text caption generation
-    generated_description = complete_sentence(pil_image=image,prompt=prompt) 
+@router.post("/chapters")
+def generate_chapter_completion(request, image: UploadedFile = File(...), prompt: Optional[str] = None, temperature: Optional[float] = None, ch_index: Optional[str] = None):
+    caption = generate_image_caption(image)
+
+    generated_description = merge_sentences(user_input = prompt, img_caption=caption, temperature = temperature, ch_index=ch_index) 
     response_data = {
         "generated_description": generated_description
     } 
@@ -37,3 +36,8 @@ def generate_complete_sentence(request, image: UploadedFile = File(...), prompt:
 def create_image_caption(request, image: UploadedFile = File(...)):
     caption = generate_image_caption(image)
     return JsonResponse({'caption': caption})
+
+@router.post("/nextprompts")
+def generate_next_prompts(request, prev_story):
+    next_prompt = generate_prompts(prev_story)
+    return JsonResponse({'next_prompt': next_prompt})
