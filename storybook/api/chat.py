@@ -7,8 +7,9 @@ from typing import Optional
 
 from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateStorySchema
 from storybook.llm_models.tiny_llama import generate_title
-from storybook.llm_models.phi3 import merge_sentences, generate_prompts
-from storybook.llm_models.tiny_llama import generate_description_story, complete_initial_sentence
+#from storybook.llm_models.phi3 import merge_sentences
+
+from storybook.llm_models.llama3 import generate_chapters, merge_sentences
 from storybook.llm_models.seamless import translate_text
 from storybook.llm_models.blip import generate_image_caption
 
@@ -40,5 +41,5 @@ def create_image_caption(request, image: UploadedFile = File(...)):
 
 @router.post("/nextprompts")
 def generate_next_prompts(request, prev_story):
-    next_prompt = generate_prompts(prev_story)
+    next_prompt = generate_chapters(prev_story)
     return JsonResponse({'next_prompt': next_prompt})
