@@ -2,7 +2,12 @@ import transformers
 import torch
 
 model_id = "unsloth/llama-3-8b-Instruct-bnb-4bit"
-
+pipeline = transformers.pipeline(
+    "text-generation",
+    model="/home/aidev/Documents/back-end/storybookcreator/LLM_models/llama3/",
+    model_kwargs={"torch_dtype": torch.bfloat16},
+    device_map="auto",
+    )
 
 messages = [
             {
@@ -19,12 +24,6 @@ Now write a prompt about Wanda, the witch. '''}
 
 
 def generate_chapters(user_input: str) -> str:
-    pipeline = transformers.pipeline(
-    "text-generation",
-    model=model_id,
-    model_kwargs={"torch_dtype": torch.bfloat16},
-    device_map="auto",
-    )
     prompt = pipeline.tokenizer.apply_chat_template(
         messages, 
         tokenize=False, 
@@ -83,4 +82,12 @@ Now combine the following input Sentence: ''' +  user_input + " Image: "+  img_c
     temperature=1.5,
     top_p=0.9,
     )
-    return outputs[0]["generated_text"][len(prompt):]
+    output = outputs[0]["generated_text"][len(prompt):]
+    print(output)
+    length = output.count('\n')
+    if length > 1:
+        
+        output = output.split('\n')[1]
+        
+
+    return output
