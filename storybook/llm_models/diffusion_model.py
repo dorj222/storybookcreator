@@ -9,7 +9,7 @@ config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
 with open(config_path, "r") as config_file:
     config = json.load(config_file)
 
-pipe = StableDiffusionXLImg2ImgPipeline.from_single_file(config["sd_turbo_path_fp16"],
+pipe = StableDiffusionXLImg2ImgPipeline.from_pretrained("/home/aidev/Documents/back-end/storybookcreator/img2img_models/sdxl-turbo/",
                                                             torch_dtype=torch.float16, 
                                                             variant="fp16",
                                                             use_safetensors=True,                                                           

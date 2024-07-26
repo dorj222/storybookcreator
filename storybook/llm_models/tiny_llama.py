@@ -21,7 +21,7 @@ with open(config_path, "r") as config_file:
 
 # Load TinyLlama model
 pipe = pipeline("text-generation", 
-               model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", 
+               model="/home/aidev/Documents/back-end/storybookcreator/LLM_models/tinyllama/", 
                torch_dtype=torch.bfloat16, 
                device_map="auto")
 

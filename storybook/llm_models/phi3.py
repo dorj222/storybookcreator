@@ -25,7 +25,7 @@ with open(config_path, "r") as config_file:
 torch.random.manual_seed(0)
 
 model = AutoModelForCausalLM.from_pretrained(
-    "microsoft/Phi-3-mini-4k-instruct", 
+    pretrained_model_name_or_path="/home/aidev/Documents/back-end/storybookcreator/LLM_models/phi3/", 
     device_map="cuda", 
     torch_dtype="auto", 
     trust_remote_code=True, 
@@ -79,13 +79,13 @@ def merge_sentences(user_input: str, img_caption: str, temperature: float, ch_in
     else:
         return 'Chapter story not generated'
 
-def generate_chapters(user_input: str , ch_index: str) -> str:
+def generate_chapters(user_input: str) -> str:
     messages = [
         {
             "role": "system",
             "content": config["narrator_prompt_start"] ,
         },
-        {"role": "user", "content": config[ch_index] + user_input}
+        {"role": "user", "content": config["ch2"] + user_input}
     ]
 
     # Apply chat template and generate text

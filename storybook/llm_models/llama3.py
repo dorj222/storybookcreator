@@ -84,10 +84,10 @@ Now combine the following input Sentence: ''' +  user_input + " Image: "+  img_c
     )
     output = outputs[0]["generated_text"][len(prompt):]
     print(output)
-    length = output.count('\n')
-    if length > 1:
+    #length = output.count('\n')
+    #if length > 1:
         
-        output = output.split('\n')[1]
+    #    output = output.split('\n')[1]
         
 
     return output
