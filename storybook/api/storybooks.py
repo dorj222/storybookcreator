@@ -3,6 +3,8 @@ from typing import List
 from ninja import Router
 from storybook.models import Storybook
 from storybook.schema import StorybookSchema, StorybookResponseSchema, NotFoundSchema
+from django.utils import timezone
+import datetime
 
 router = Router()
 
@@ -22,7 +24,7 @@ def storybook(request, storybook_id: str):
 def create_storybook(request, storybook: StorybookSchema):
     try:
         storybook_data = storybook.dict()
-        storybook_data['createdAt'] = datetime.now()
+        storybook_data['createdAt'] = datetime.datetime.now(tz=timezone.utc) 
         new_storybook = Storybook.objects.create(**storybook_data)
         return 201, new_storybook
     except Exception as e:

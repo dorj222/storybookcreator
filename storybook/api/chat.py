@@ -7,9 +7,7 @@ from typing import Optional
 
 from storybook.schema import GenerateTextSchema, TranslateTextSchema, GenerateStorySchema
 from storybook.llm_models.tiny_llama import generate_title
-#from storybook.llm_models.phi3 import merge_sentences
-
-from storybook.llm_models.llama3 import generate_chapters, merge_sentences
+from storybook.llm_models.phi3 import merge_sentences, generate_chapters
 from storybook.llm_models.seamless import translate_text
 from storybook.llm_models.blip import generate_image_caption
 

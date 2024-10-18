@@ -110,7 +110,7 @@ timm==0.4.12
 tokenizers==0.15.1
 toolz==0.12.0
 torch==2.1.2
-torchaudio==2.1.2+cu118
+torchaudio
 torchvision==0.16.2
 tqdm==4.66.1
 transformers==4.35.2

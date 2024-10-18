@@ -1,0 +1,1874 @@
+{
+  "added_tokens_decoder": {
+    "0": {
+      "content": "<pad>",
+      "lstrip": false,
+      "normalized": false,
+      "rstrip": false,
+      "single_word": false,
+      "special": true
+    },
+    "1": {
+      "content": "<unk>",
+      "lstrip": false,
+      "normalized": false,
+      "rstrip": false,
+      "single_word": false,
+      "special": true
+    },
+    "2": {
+      "content": "<s>",
+      "lstrip": false,
+      "normalized": false,
+      "rstrip": false,
+      "single_word": false,
+      "special": true
+    },
+    "3": {
+      "content": "</s>",
+      "lstrip": false,
+      "normalized": false,
+      "rstrip": false,
+      "single_word": false,
+      "special": true
+    },
+    "256001": {
+      "content": "__ace__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256002": {
+      "content": "__ace_Latn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256003": {
+      "content": "__acm__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256004": {
+      "content": "__acq__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256005": {
+      "content": "__aeb__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256006": {
+      "content": "__afr__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256007": {
+      "content": "__ajp__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256008": {
+      "content": "__aka__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256009": {
+      "content": "__amh__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256010": {
+      "content": "__apc__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256011": {
+      "content": "__arb__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256012": {
+      "content": "__ars__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256013": {
+      "content": "__ary__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256014": {
+      "content": "__arz__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256015": {
+      "content": "__asm__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256016": {
+      "content": "__ast__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256017": {
+      "content": "__awa__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256018": {
+      "content": "__ayr__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256019": {
+      "content": "__azb__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256020": {
+      "content": "__azj__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256021": {
+      "content": "__bak__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256022": {
+      "content": "__bam__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256023": {
+      "content": "__ban__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256024": {
+      "content": "__bel__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256025": {
+      "content": "__bem__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256026": {
+      "content": "__ben__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256027": {
+      "content": "__bho__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256028": {
+      "content": "__bjn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256029": {
+      "content": "__bjn_Latn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256030": {
+      "content": "__bod__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256031": {
+      "content": "__bos__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256032": {
+      "content": "__bug__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256033": {
+      "content": "__bul__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256034": {
+      "content": "__cat__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256035": {
+      "content": "__ceb__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256036": {
+      "content": "__ces__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256037": {
+      "content": "__cjk__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256038": {
+      "content": "__ckb__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256039": {
+      "content": "__crh__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256040": {
+      "content": "__cym__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256041": {
+      "content": "__dan__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256042": {
+      "content": "__deu__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256043": {
+      "content": "__dik__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256044": {
+      "content": "__dyu__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256045": {
+      "content": "__dzo__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256046": {
+      "content": "__ell__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256047": {
+      "content": "__eng__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256048": {
+      "content": "__epo__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256049": {
+      "content": "__est__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256050": {
+      "content": "__eus__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256051": {
+      "content": "__ewe__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256052": {
+      "content": "__fao__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256053": {
+      "content": "__pes__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256054": {
+      "content": "__fij__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256055": {
+      "content": "__fin__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256056": {
+      "content": "__fon__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256057": {
+      "content": "__fra__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256058": {
+      "content": "__fur__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256059": {
+      "content": "__fuv__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256060": {
+      "content": "__gla__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256061": {
+      "content": "__gle__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256062": {
+      "content": "__glg__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256063": {
+      "content": "__grn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256064": {
+      "content": "__guj__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256065": {
+      "content": "__hat__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256066": {
+      "content": "__hau__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256067": {
+      "content": "__heb__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256068": {
+      "content": "__hin__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256069": {
+      "content": "__hne__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256070": {
+      "content": "__hrv__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256071": {
+      "content": "__hun__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256072": {
+      "content": "__hye__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256073": {
+      "content": "__ibo__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256074": {
+      "content": "__ilo__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256075": {
+      "content": "__ind__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256076": {
+      "content": "__isl__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256077": {
+      "content": "__ita__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256078": {
+      "content": "__jav__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256079": {
+      "content": "__jpn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256080": {
+      "content": "__kab__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256081": {
+      "content": "__kac__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256082": {
+      "content": "__kam__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256083": {
+      "content": "__kan__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256084": {
+      "content": "__kas__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256085": {
+      "content": "__kas_Deva__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256086": {
+      "content": "__kat__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256087": {
+      "content": "__knc__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256088": {
+      "content": "__knc_Latn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256089": {
+      "content": "__kaz__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256090": {
+      "content": "__kbp__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256091": {
+      "content": "__kea__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256092": {
+      "content": "__khm__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256093": {
+      "content": "__kik__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256094": {
+      "content": "__kin__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256095": {
+      "content": "__kir__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256096": {
+      "content": "__kmb__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256097": {
+      "content": "__kon__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256098": {
+      "content": "__kor__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256099": {
+      "content": "__kmr__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256100": {
+      "content": "__lao__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256101": {
+      "content": "__lvs__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256102": {
+      "content": "__lij__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256103": {
+      "content": "__lim__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256104": {
+      "content": "__lin__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256105": {
+      "content": "__lit__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256106": {
+      "content": "__lmo__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256107": {
+      "content": "__ltg__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256108": {
+      "content": "__ltz__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256109": {
+      "content": "__lua__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256110": {
+      "content": "__lug__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256111": {
+      "content": "__luo__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256112": {
+      "content": "__lus__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256113": {
+      "content": "__mag__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256114": {
+      "content": "__mai__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256115": {
+      "content": "__mal__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256116": {
+      "content": "__mar__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256117": {
+      "content": "__min__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256118": {
+      "content": "__mkd__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256119": {
+      "content": "__plt__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256120": {
+      "content": "__mlt__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256121": {
+      "content": "__mni__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256122": {
+      "content": "__khk__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256123": {
+      "content": "__mos__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256124": {
+      "content": "__mri__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256125": {
+      "content": "__zsm__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256126": {
+      "content": "__mya__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256127": {
+      "content": "__nld__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256128": {
+      "content": "__nno__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256129": {
+      "content": "__nob__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256130": {
+      "content": "__npi__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256131": {
+      "content": "__nso__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256132": {
+      "content": "__nus__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256133": {
+      "content": "__nya__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256134": {
+      "content": "__oci__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256135": {
+      "content": "__gaz__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256136": {
+      "content": "__ory__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256137": {
+      "content": "__pag__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256138": {
+      "content": "__pan__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256139": {
+      "content": "__pap__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256140": {
+      "content": "__pol__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256141": {
+      "content": "__por__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256142": {
+      "content": "__prs__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256143": {
+      "content": "__pbt__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256144": {
+      "content": "__quy__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256145": {
+      "content": "__ron__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256146": {
+      "content": "__run__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256147": {
+      "content": "__rus__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256148": {
+      "content": "__sag__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256149": {
+      "content": "__san__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256150": {
+      "content": "__sat__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256151": {
+      "content": "__scn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256152": {
+      "content": "__shn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256153": {
+      "content": "__sin__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256154": {
+      "content": "__slk__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256155": {
+      "content": "__slv__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256156": {
+      "content": "__smo__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256157": {
+      "content": "__sna__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256158": {
+      "content": "__snd__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256159": {
+      "content": "__som__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256160": {
+      "content": "__sot__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256161": {
+      "content": "__spa__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256162": {
+      "content": "__als__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256163": {
+      "content": "__srd__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256164": {
+      "content": "__srp__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256165": {
+      "content": "__ssw__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256166": {
+      "content": "__sun__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256167": {
+      "content": "__swe__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256168": {
+      "content": "__swh__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256169": {
+      "content": "__szl__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256170": {
+      "content": "__tam__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256171": {
+      "content": "__tat__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256172": {
+      "content": "__tel__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256173": {
+      "content": "__tgk__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256174": {
+      "content": "__tgl__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256175": {
+      "content": "__tha__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256176": {
+      "content": "__tir__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256177": {
+      "content": "__taq__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256178": {
+      "content": "__taq_Tfng__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256179": {
+      "content": "__tpi__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256180": {
+      "content": "__tsn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256181": {
+      "content": "__tso__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256182": {
+      "content": "__tuk__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256183": {
+      "content": "__tum__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256184": {
+      "content": "__tur__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256185": {
+      "content": "__twi__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256186": {
+      "content": "__tzm__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256187": {
+      "content": "__uig__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256188": {
+      "content": "__ukr__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256189": {
+      "content": "__umb__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256190": {
+      "content": "__urd__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256191": {
+      "content": "__uzn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256192": {
+      "content": "__vec__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256193": {
+      "content": "__vie__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256194": {
+      "content": "__war__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256195": {
+      "content": "__wol__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256196": {
+      "content": "__xho__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256197": {
+      "content": "__ydd__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256198": {
+      "content": "__yor__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256199": {
+      "content": "__yue__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256200": {
+      "content": "__cmn__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256201": {
+      "content": "__cmn_Hant__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    },
+    "256202": {
+      "content": "__zul__",
+      "lstrip": true,
+      "normalized": false,
+      "rstrip": true,
+      "single_word": false,
+      "special": true
+    }
+  },
+  "additional_special_tokens": [
+    "<pad>",
+    "<unk>",
+    "<s>",
+    "</s>",
+    "__ace__",
+    "__ace_Latn__",
+    "__acm__",
+    "__acq__",
+    "__aeb__",
+    "__afr__",
+    "__ajp__",
+    "__aka__",
+    "__amh__",
+    "__apc__",
+    "__arb__",
+    "__ars__",
+    "__ary__",
+    "__arz__",
+    "__asm__",
+    "__ast__",
+    "__awa__",
+    "__ayr__",
+    "__azb__",
+    "__azj__",
+    "__bak__",
+    "__bam__",
+    "__ban__",
+    "__bel__",
+    "__bem__",
+    "__ben__",
+    "__bho__",
+    "__bjn__",
+    "__bjn_Latn__",
+    "__bod__",
+    "__bos__",
+    "__bug__",
+    "__bul__",
+    "__cat__",
+    "__ceb__",
+    "__ces__",
+    "__cjk__",
+    "__ckb__",
+    "__crh__",
+    "__cym__",
+    "__dan__",
+    "__deu__",
+    "__dik__",
+    "__dyu__",
+    "__dzo__",
+    "__ell__",
+    "__eng__",
+    "__epo__",
+    "__est__",
+    "__eus__",
+    "__ewe__",
+    "__fao__",
+    "__pes__",
+    "__fij__",
+    "__fin__",
+    "__fon__",
+    "__fra__",
+    "__fur__",
+    "__fuv__",
+    "__gla__",
+    "__gle__",
+    "__glg__",
+    "__grn__",
+    "__guj__",
+    "__hat__",
+    "__hau__",
+    "__heb__",
+    "__hin__",
+    "__hne__",
+    "__hrv__",
+    "__hun__",
+    "__hye__",
+    "__ibo__",
+    "__ilo__",
+    "__ind__",
+    "__isl__",
+    "__ita__",
+    "__jav__",
+    "__jpn__",
+    "__kab__",
+    "__kac__",
+    "__kam__",
+    "__kan__",
+    "__kas__",
+    "__kas_Deva__",
+    "__kat__",
+    "__knc__",
+    "__knc_Latn__",
+    "__kaz__",
+    "__kbp__",
+    "__kea__",
+    "__khm__",
+    "__kik__",
+    "__kin__",
+    "__kir__",
+    "__kmb__",
+    "__kon__",
+    "__kor__",
+    "__kmr__",
+    "__lao__",
+    "__lvs__",
+    "__lij__",
+    "__lim__",
+    "__lin__",
+    "__lit__",
+    "__lmo__",
+    "__ltg__",
+    "__ltz__",
+    "__lua__",
+    "__lug__",
+    "__luo__",
+    "__lus__",
+    "__mag__",
+    "__mai__",
+    "__mal__",
+    "__mar__",
+    "__min__",
+    "__mkd__",
+    "__plt__",
+    "__mlt__",
+    "__mni__",
+    "__khk__",
+    "__mos__",
+    "__mri__",
+    "__zsm__",
+    "__mya__",
+    "__nld__",
+    "__nno__",
+    "__nob__",
+    "__npi__",
+    "__nso__",
+    "__nus__",
+    "__nya__",
+    "__oci__",
+    "__gaz__",
+    "__ory__",
+    "__pag__",
+    "__pan__",
+    "__pap__",
+    "__pol__",
+    "__por__",
+    "__prs__",
+    "__pbt__",
+    "__quy__",
+    "__ron__",
+    "__run__",
+    "__rus__",
+    "__sag__",
+    "__san__",
+    "__sat__",
+    "__scn__",
+    "__shn__",
+    "__sin__",
+    "__slk__",
+    "__slv__",
+    "__smo__",
+    "__sna__",
+    "__snd__",
+    "__som__",
+    "__sot__",
+    "__spa__",
+    "__als__",
+    "__srd__",
+    "__srp__",
+    "__ssw__",
+    "__sun__",
+    "__swe__",
+    "__swh__",
+    "__szl__",
+    "__tam__",
+    "__tat__",
+    "__tel__",
+    "__tgk__",
+    "__tgl__",
+    "__tha__",
+    "__tir__",
+    "__taq__",
+    "__taq_Tfng__",
+    "__tpi__",
+    "__tsn__",
+    "__tso__",
+    "__tuk__",
+    "__tum__",
+    "__tur__",
+    "__twi__",
+    "__tzm__",
+    "__uig__",
+    "__ukr__",
+    "__umb__",
+    "__urd__",
+    "__uzn__",
+    "__vec__",
+    "__vie__",
+    "__war__",
+    "__wol__",
+    "__xho__",
+    "__ydd__",
+    "__yor__",
+    "__yue__",
+    "__cmn__",
+    "__cmn_Hant__",
+    "__zul__"
+  ],
+  "bos_token": "<s>",
+  "clean_up_tokenization_spaces": true,
+  "cls_token": "<s>",
+  "eos_token": "</s>",
+  "model_max_length": 1000000000000000019884624838656,
+  "pad_token": "<pad>",
+  "processor_class": "SeamlessM4TProcessor",
+  "sep_token": "</s>",
+  "sp_model_kwargs": {},
+  "src_lang": "__eng__",
+  "tgt_lang": "__fra__",
+  "tokenizer_class": "SeamlessM4TTokenizer",
+  "tokenizer_file": null,
+  "unk_token": "<unk>"
+}

@@ -1,7 +1,6 @@
 from ninja import Router, Schema
 from django.http import JsonResponse
 from transformers import pipeline
-import torch
 from storybook.schema import GenerateTextSchema
 import json
 
@@ -13,9 +12,7 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
-
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 # Import config file
 config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
 # Load configuration from config.json
@@ -23,17 +20,18 @@ with open(config_path, "r") as config_file:
     config = json.load(config_file)
 
 torch.random.manual_seed(0)
-
+torch.cuda.empty_cache()
 model = AutoModelForCausalLM.from_pretrained(
-    "microsoft/Phi-3-mini-4k-instruct", 
-    device_map="cuda", 
-    torch_dtype="auto", 
-    trust_remote_code=True, 
-    length_penalty=0.01
-)
-tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
+    pretrained_model_name_or_path="LLM_models/phi3/", 
+        torch_dtype="auto",  
+    length_penalty=0.01,
+    ignore_mismatched_sizes=True,
+        trust_remote_code=True,  
+).to("cuda")
+tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path="LLM_models/phi3/",ignore_mismatched_sizes=True)
 pipe = pipeline(
     "text-generation",
+    device_map="cuda", 
     model=model,
     tokenizer=tokenizer,
 )
@@ -79,13 +77,13 @@ def merge_sentences(user_input: str, img_caption: str, temperature: float, ch_in
     else:
         return 'Chapter story not generated'
 
-def generate_chapters(user_input: str , ch_index: str) -> str:
+def generate_chapters(user_input: str ) -> str:
     messages = [
         {
             "role": "system",
             "content": config["narrator_prompt_start"] ,
         },
-        {"role": "user", "content": config[ch_index] + user_input}
+        {"role": "user", "content": "Continue the following story in one very short sentence.\nStory:" + user_input}
     ]
 
     # Apply chat template and generate text

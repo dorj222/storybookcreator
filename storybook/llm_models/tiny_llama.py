@@ -9,9 +9,9 @@ import os
 import gc
 import re
 
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.tag import pos_tag
+#import nltk
+#from nltk.tokenize import word_tokenize
+#from nltk.tag import pos_tag
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 # Import config file
 config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
@@ -21,7 +21,7 @@ with open(config_path, "r") as config_file:
 
 # Load TinyLlama model
 pipe = pipeline("text-generation", 
-               model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", 
+               model="LLM_models/tinyllama/", 
                torch_dtype=torch.bfloat16, 
                device_map="auto")
 

@@ -3,9 +3,8 @@ from transformers import AutoProcessor, SeamlessM4TModel
 import torch
 import gc
 
-processor = AutoProcessor.from_pretrained("facebook/hf-seamless-m4t-medium")
-model = SeamlessM4TModel.from_pretrained("facebook/hf-seamless-m4t-medium")
-
+processor = AutoProcessor.from_pretrained("LLM_models/seamless/")
+model = SeamlessM4TModel.from_pretrained("LLM_models/seamless/")
 def translate_text(user_input: str, tgt_lang) -> str:
     gc.collect()
     torch.cuda.empty_cache()
