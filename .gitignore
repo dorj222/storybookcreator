@@ -17,3 +17,7 @@ venv.bak/
 
 # Safetensors files
 *safetensors
+*bin
+*h5
+*model
+*onnx
