@@ -56,6 +56,7 @@ def get_storybook_images(request, storybook_id: UUID):
         return 404, {"message": "Storybook does not have any image"}
 
 
+
 @router.post("/{storybook_id}", response={201: ImageResponseSchema, 404: NotFoundSchema})
 def create_storybook_image(request, storybook_id: UUID, image: UploadedFile = File(...), 
                            prompt: Optional[str] = None,  parameters: Optional[str] = None):

@@ -19,6 +19,7 @@ config_path = os.path.join(os.path.dirname(__file__), "../../", "config.json")
 with open(config_path, "r") as config_file:
     config = json.load(config_file)
 
+'''
 torch.random.manual_seed(0)
 torch.cuda.empty_cache()
 model = AutoModelForCausalLM.from_pretrained(
@@ -42,7 +43,7 @@ generation_args = {
     "temperature": 0.0,
     "do_sample": False,
 }
-
+'''
 
 def merge_sentences(user_input: str, img_caption: str, temperature: float, ch_index: str) -> str:
     gc.collect()

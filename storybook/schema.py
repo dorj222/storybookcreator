@@ -65,6 +65,7 @@ class DescriptionListResponseSchema(Schema):
 
 class GenerateTextSchema(Schema):
     user_input: str
+    language: str
 
 class GenerateStorySchema(Schema):
     prompt: str
